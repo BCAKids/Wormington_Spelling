@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spelling Practice</title>
+
+    <title>Wormington Spelling</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
+            margin: 0;
             font-family: Arial, sans-serif;
             text-align: center;
-            padding: 30px 20px;
             background: #f4f7fb;
+            color: #222;
+            padding: 30px 20px;
         }
 
         h1 {
@@ -23,56 +30,54 @@
         }
 
         #wordDisplay {
-            font-size: 42px;
-            letter-spacing: 10px;
-            margin: 40px 0;
+            font-size: 44px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin: 45px 0 25px;
             min-height: 60px;
-        }
-
-        button {
-            font-size: 20px;
-            padding: 14px 22px;
-            margin: 8px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
         }
 
         #speakButton {
             background: #4285f4;
             color: white;
-        }
-
-        #message {
-            font-size: 24px;
-            font-weight: bold;
-            min-height: 35px;
-        }
-
-        #progress {
-            margin-top: 25px;
-            font-size: 18px;
-            color: #666;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            padding: 14px 25px;
+            cursor: pointer;
         }
 
         #hiddenInput {
-    width: 280px;
-    max-width: 90%;
-    padding: 14px;
-    font-size: 24px;
-    text-align: center;
-    border: 2px solid #aaa;
-    border-radius: 10px;
-    outline: none;
-}
+            width: 300px;
+            max-width: 90%;
+            padding: 15px;
+            font-size: 24px;
+            text-align: center;
+            border: 2px solid #aaa;
+            border-radius: 10px;
+            outline: none;
+        }
 
-#hiddenInput:focus {
-    border-color: #4285f4;
-}
+        #hiddenInput:focus {
+            border-color: #4285f4;
+        }
 
-        a {
+        #message {
+            font-size: 26px;
+            font-weight: bold;
+            min-height: 40px;
+            margin-top: 20px;
+        }
+
+        #progress {
+            font-size: 18px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        .backLink {
             display: inline-block;
-            margin-top: 35px;
+            margin-top: 40px;
         }
     </style>
 </head>
@@ -80,29 +85,32 @@
 <body>
 
     <h1>Wormington Spelling</h1>
+
     <h2 id="weekTitle"></h2>
 
-    <button id="speakButton" onclick="speakWord()">🔊 Say Word</button>
+    <button id="speakButton" type="button" onclick="speakWord()">
+        🔊 Say Word
+    </button>
 
     <div id="wordDisplay"></div>
+
+    <input
+        id="hiddenInput"
+        type="text"
+        placeholder="Type a letter..."
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+    >
 
     <div id="message"></div>
 
     <div id="progress"></div>
 
-    <input
-    id="hiddenInput"
-    type="text"
-    placeholder="Type here..."
-    autocomplete="off"
-    autocorrect="off"
-    autocapitalize="off"
-    spellcheck="false"
->
-
-    <p>
-        <a href="index.html">← Choose Another Week</a>
-    </p>
+    <a class="backLink" href="index.html">
+        ← Choose Another Week
+    </a>
 
     <script src="app.js"></script>
 
