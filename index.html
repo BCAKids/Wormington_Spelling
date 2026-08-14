@@ -3,16 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Wormington Spelling</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eef4ff, #f8f5ff);
+            color: #222;
+        }
+
+        .start-card {
+            width: 90%;
+            max-width: 520px;
+            background: white;
+            padding: 45px 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.10);
+        }
+
+        .icon {
+            font-size: 70px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 38px;
+        }
+
+        .subtitle {
+            margin-top: 10px;
+            margin-bottom: 35px;
+            color: #666;
+            font-size: 20px;
+        }
+
+        .start-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 14px;
+            background: #4285f4;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform .15s;
+        }
+
+        .start-button:active {
+            transform: scale(.96);
+        }
+
+        .word-count {
+            margin-top: 20px;
+            color: #888;
+        }
+    </style>
 </head>
+
 <body>
 
-    <h1>Wormington Spelling</h1>
-    <h2>Choose a Week</h2>
+    <div class="start-card">
 
-    <p><a href="practice.html?week=1">Week 1</a></p>
-    <p><a href="practice.html?week=2">Week 2</a></p>
-    <p><a href="practice.html?week=3">Week 3</a></p>
+        <div class="icon">✏️</div>
+
+        <h1>Wormington Spelling</h1>
+
+        <div class="subtitle">
+            Ready to practice?
+        </div>
+
+        <a class="start-button" href="practice.html">
+            Start Practice
+        </a>
+
+        <div class="word-count">
+            Current spelling list
+        </div>
+
+    </div>
 
 </body>
 </html>
