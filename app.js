@@ -26,20 +26,27 @@ const lists = {
 
 };
 
+
+// Get week number from URL
 const params = new URLSearchParams(window.location.search);
-const week = params.get("week");
+const week = params.get("week") || "1";
 
 const spellingWords = lists[week];
 
 let currentWordIndex = 0;
 let currentLetterIndex = 0;
 
+
+// Get page elements
+const weekTitle = document.getElementById("weekTitle");
 const wordDisplay = document.getElementById("wordDisplay");
 const message = document.getElementById("message");
 const progress = document.getElementById("progress");
 const hiddenInput = document.getElementById("hiddenInput");
 
-document.getElementById("weekTitle").textContent = "Week " + week;
+
+// Show current week
+weekTitle.textContent = "Week " + week;
 
 
 function showWordBlanks() {
@@ -61,8 +68,10 @@ function showWordBlanks() {
     wordDisplay.textContent = display;
 
     progress.textContent =
-        "Word " + (currentWordIndex + 1) +
-        " of " + spellingWords.length;
+        "Word " +
+        (currentWordIndex + 1) +
+        " of " +
+        spellingWords.length;
 }
 
 
@@ -74,8 +83,8 @@ function speakWord() {
 
     speech.lang = "en-US";
     speech.rate = 0.7;
-    speech.pitch = 1.0;
-    speech.volume = 1.0;
+    speech.pitch = 1;
+    speech.volume = 1;
 
     const voices = speechSynthesis.getVoices();
 
@@ -109,19 +118,22 @@ function handleLetter(letter) {
 
         currentLetterIndex++;
 
-        message.textContent = "✓";
+        message.textContent = "✓ Correct";
+
         showWordBlanks();
 
         if (currentLetterIndex === word.length) {
 
             message.textContent = "🎉 Great job!";
 
-            setTimeout(nextWord, 1200);
+            hiddenInput.disabled = true;
+
+            setTimeout(nextWord, 1500);
         }
 
     } else {
 
-        message.textContent = "Try again";
+        message.textContent = "❌ Try again";
 
     }
 }
@@ -132,11 +144,14 @@ function nextWord() {
     currentWordIndex++;
     currentLetterIndex = 0;
 
+    hiddenInput.disabled = false;
+
     if (currentWordIndex >= spellingWords.length) {
 
         wordDisplay.textContent = "🎉";
-        message.textContent = "You finished the list!";
+        message.textContent = "You finished Week " + week + "!";
         progress.textContent = "";
+        hiddenInput.style.display = "none";
 
         return;
     }
@@ -146,6 +161,8 @@ function nextWord() {
     showWordBlanks();
 
     speakWord();
+
+    hiddenInput.focus();
 }
 
 
@@ -155,89 +172,15 @@ hiddenInput.addEventListener("input", function () {
 
     if (typed.length > 0) {
 
-        const letter =
-            typed.charAt(typed.length - 1);
+        const letter = typed.charAt(typed.length - 1);
 
         handleLetter(letter);
 
     }
 
+    // Always clear the box after each keypress
     hiddenInput.value = "";
-
 });
 
 
-document.body.addEventListener("click", function () {
-
-    hiddenInput.focus();
-
-});
-
-
-showWordBlanks();const lists = {
-
-    1: [
-        "apple",
-        "dog",
-        "house",
-        "yellow",
-        "school"
-    ],
-
-    2: [
-        "because",
-        "friend",
-        "little",
-        "people",
-        "pretty"
-    ],
-
-    3: [
-        "different",
-        "important",
-        "thought",
-        "through",
-        "enough"
-    ]
-
-};
-
-
-const params = new URLSearchParams(window.location.search);
-
-const week = params.get("week");
-
-const spellingWords = lists[week];
-
-
-document.getElementById("weekTitle").textContent =
-    "Week " + week;
-
-
-let currentWordIndex = 0;
-
-
-function speakWord() {
-    const word = spellingWords[currentWordIndex];
-
-    const speech = new SpeechSynthesisUtterance(word);
-
-    speech.lang = "en-US";
-    speech.rate = 0.7;
-    speech.pitch = 1.0;
-    speech.volume = 1.0;
-
-    const voices = speechSynthesis.getVoices();
-
-    const preferredVoice =
-        voices.find(v => v.lang === "en-US" && v.name.toLowerCase().includes("samantha")) ||
-        voices.find(v => v.lang === "en-US") ||
-        voices.find(v => v.lang.startsWith("en"));
-
-    if (preferredVoice) {
-        speech.voice = preferredVoice;
-    }
-
-    speechSynthesis.cancel();
-    speechSynthesis.speak(speech);
-}
+showWordBlanks();
