@@ -1,3 +1,14 @@
+// ======================================================
+// WORMINGTON SPELLING
+// Main App
+// ======================================================
+
+
+// ------------------------------------------------------
+// CURRENT SPELLING LIST
+// Replace these words each week.
+// ------------------------------------------------------
+
 const spellingWords = [
 
     "confer",
@@ -39,6 +50,135 @@ const spellingWords = [
 ];
 
 
+// ------------------------------------------------------
+// PROFILES
+// ------------------------------------------------------
+
+const profiles = {
+
+    raccoon: {
+        name: "Raccoon",
+        image: "images/raccoon.png"
+    },
+
+    potato: {
+        name: "Potato",
+        image: "images/potato.png"
+    },
+
+    bird: {
+        name: "Bird",
+        image: "images/bird.png"
+    }
+
+};
+
+
+// Whichever profile was selected on the start screen.
+// Until we modify index.html, Raccoon will be the default.
+
+const selectedProfileId =
+    localStorage.getItem("wormingtonSelectedProfile")
+    || "raccoon";
+
+const selectedProfile =
+    profiles[selectedProfileId];
+
+
+// ------------------------------------------------------
+// HISTORY DATABASE
+// ------------------------------------------------------
+
+const HISTORY_KEY =
+    "wormingtonSpellingHistory";
+
+
+function loadHistory() {
+
+    const saved =
+        localStorage.getItem(HISTORY_KEY);
+
+    if (!saved) {
+
+        return {
+            raccoon: createEmptyProfileHistory(),
+            potato: createEmptyProfileHistory(),
+            bird: createEmptyProfileHistory()
+        };
+
+    }
+
+    try {
+
+        const history =
+            JSON.parse(saved);
+
+        // Make sure all three profiles exist
+        for (const id of Object.keys(profiles)) {
+
+            if (!history[id]) {
+
+                history[id] =
+                    createEmptyProfileHistory();
+
+            }
+
+        }
+
+        return history;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Could not load spelling history:",
+            error
+        );
+
+        return {
+            raccoon: createEmptyProfileHistory(),
+            potato: createEmptyProfileHistory(),
+            bird: createEmptyProfileHistory()
+        };
+
+    }
+
+}
+
+
+function createEmptyProfileHistory() {
+
+    return {
+
+        sessions: [],
+        wordsPracticed: 0,
+        perfectWords: 0,
+        missedWords: 0,
+        wordStats: {}
+
+    };
+
+}
+
+
+function saveHistory() {
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(history)
+    );
+
+}
+
+
+let history =
+    loadHistory();
+
+
+// ------------------------------------------------------
+// CURRENT SESSION
+// ------------------------------------------------------
 
 let currentWordIndex = 0;
 
@@ -48,7 +188,17 @@ let currentWordMissed = false;
 
 let correctWords = 0;
 
+let missedWords = 0;
 
+
+// Results from THIS practice session.
+
+let sessionResults = [];
+
+
+// ------------------------------------------------------
+// PAGE ELEMENTS
+// ------------------------------------------------------
 
 const wordDisplay =
     document.getElementById("wordDisplay");
@@ -71,16 +221,57 @@ const score =
 const practiceCard =
     document.getElementById("practiceCard");
 
+const speakButton =
+    document.getElementById("speakButton");
 
 
-// ------------------------------------
+// These won't exist until we update practice.html.
+// That's okay — the code safely ignores them for now.
+
+const profileName =
+    document.getElementById("profileName");
+
+const profileImage =
+    document.getElementById("profileImage");
+
+
+// ------------------------------------------------------
+// SHOW SELECTED PROFILE
+// ------------------------------------------------------
+
+if (profileName) {
+
+    profileName.textContent =
+        selectedProfile.name;
+
+}
+
+
+if (profileImage) {
+
+    profileImage.src =
+        selectedProfile.image;
+
+    profileImage.alt =
+        selectedProfile.name;
+
+}
+
+
+// ------------------------------------------------------
 // DISPLAY WORD
-// ------------------------------------
+// ------------------------------------------------------
 
 function showWord() {
 
+    if (!wordDisplay) {
+        return;
+    }
+
+
     const word =
         spellingWords[currentWordIndex];
+
 
     let display = "";
 
@@ -92,6 +283,7 @@ function showWord() {
     ) {
 
         // Spaces appear automatically
+        // so the student doesn't have to type them.
 
         if (word[i] === " ") {
 
@@ -105,7 +297,8 @@ function showWord() {
         if (i < currentLetterIndex) {
 
             display +=
-                word[i].toUpperCase() + " ";
+                word[i].toUpperCase()
+                + " ";
 
         }
 
@@ -118,23 +311,27 @@ function showWord() {
     }
 
 
-    wordDisplay.textContent = display;
+    wordDisplay.textContent =
+        display;
 
 
-    progress.textContent =
+    if (progress) {
 
-        "Word " +
-        (currentWordIndex + 1) +
-        " of " +
-        spellingWords.length;
+        progress.textContent =
+
+            "Word "
+            + (currentWordIndex + 1)
+            + " of "
+            + spellingWords.length;
+
+    }
 
 }
 
 
-
-// ------------------------------------
-// SPEAK WORD
-// ------------------------------------
+// ------------------------------------------------------
+// SPEAK CURRENT WORD
+// ------------------------------------------------------
 
 function speakWord() {
 
@@ -143,32 +340,43 @@ function speakWord() {
 
 
     const speech =
-        new SpeechSynthesisUtterance(word);
+        new SpeechSynthesisUtterance(
+            word
+        );
 
 
-    speech.lang = "en-US";
+    speech.lang =
+        "en-US";
 
-    speech.rate = 0.72;
+    speech.rate =
+        0.72;
 
-    speech.pitch = 1;
+    speech.pitch =
+        1;
 
-    speech.volume = 1;
+    speech.volume =
+        1;
 
 
     speechSynthesis.cancel();
 
-    speechSynthesis.speak(speech);
+    speechSynthesis.speak(
+        speech
+    );
 
 
-    letterInput.focus();
+    if (letterInput) {
+
+        letterInput.focus();
+
+    }
 
 }
 
 
-
-// ------------------------------------
-// HANDLE TYPED LETTER
-// ------------------------------------
+// ------------------------------------------------------
+// CHECK LETTER
+// ------------------------------------------------------
 
 function handleLetter(letter) {
 
@@ -176,10 +384,11 @@ function handleLetter(letter) {
         spellingWords[currentWordIndex];
 
 
-    // Skip spaces automatically
+    // Automatically skip spaces.
 
     while (
-        word[currentLetterIndex] === " "
+        word[currentLetterIndex]
+        === " "
     ) {
 
         currentLetterIndex++;
@@ -188,21 +397,26 @@ function handleLetter(letter) {
 
 
     const correctLetter =
-        word[currentLetterIndex].toLowerCase();
+
+        word[
+            currentLetterIndex
+        ].toLowerCase();
 
 
     if (
-        letter.toLowerCase() ===
+        letter.toLowerCase()
+        ===
         correctLetter
     ) {
 
         currentLetterIndex++;
 
 
-        // Skip space after correct letter
+        // Skip space after a correct letter.
 
         while (
-            word[currentLetterIndex] === " "
+            word[currentLetterIndex]
+            === " "
         ) {
 
             currentLetterIndex++;
@@ -213,11 +427,17 @@ function handleLetter(letter) {
         showWord();
 
 
-        message.textContent = "✓";
+        if (message) {
+
+            message.textContent =
+                "✓";
+
+        }
 
 
         if (
-            currentLetterIndex >=
+            currentLetterIndex
+            >=
             word.length
         ) {
 
@@ -229,7 +449,8 @@ function handleLetter(letter) {
 
     else {
 
-        currentWordMissed = true;
+        currentWordMissed =
+            true;
 
         showWrongAnimation();
 
@@ -238,10 +459,9 @@ function handleLetter(letter) {
 }
 
 
-
-// ------------------------------------
-// WRONG LETTER
-// ------------------------------------
+// ------------------------------------------------------
+// WRONG LETTER ANIMATION
+// ------------------------------------------------------
 
 function showWrongAnimation() {
 
@@ -252,7 +472,9 @@ function showWrongAnimation() {
         "Try that again! 🫣",
         "Oops! 🙃",
         "Not that one! 😂",
-        "Nice try! 😎"
+        "Nice try! 😎",
+        "Bruh. 😂",
+        "That letter betrayed you. 😆"
 
     ];
 
@@ -261,40 +483,48 @@ function showWrongAnimation() {
 
         funnyMessages[
             Math.floor(
-                Math.random() *
+                Math.random()
+                *
                 funnyMessages.length
             )
         ];
 
 
-    message.textContent =
-        randomMessage;
+    if (message) {
+
+        message.textContent =
+            randomMessage;
+
+    }
 
 
-    practiceCard.classList.add(
-        "shake"
-    );
+    if (practiceCard) {
+
+        practiceCard.classList.add(
+            "shake"
+        );
 
 
-    setTimeout(
-        () => {
+        setTimeout(
+            () => {
 
-            practiceCard
-                .classList
-                .remove("shake");
+                practiceCard
+                    .classList
+                    .remove("shake");
 
-        },
+            },
 
-        400
-    );
+            400
+        );
+
+    }
 
 }
 
 
-
-// ------------------------------------
-// FINISH WORD
-// ------------------------------------
+// ------------------------------------------------------
+// FINISH CURRENT WORD
+// ------------------------------------------------------
 
 function finishWord() {
 
@@ -302,19 +532,53 @@ function finishWord() {
         spellingWords[currentWordIndex];
 
 
+    // Add result to sidebar.
+
     addResult(
         word,
         currentWordMissed
     );
 
 
-    letterInput.disabled = true;
+    // Save permanent history.
+
+    recordWordHistory(
+        word,
+        currentWordMissed
+    );
+
+
+    // Save result for this session.
+
+    sessionResults.push({
+
+        word: word,
+
+        missed:
+            currentWordMissed
+
+    });
+
+
+    if (letterInput) {
+
+        letterInput.disabled =
+            true;
+
+    }
 
 
     if (currentWordMissed) {
 
-        message.textContent =
-            "You got it! 👍";
+        missedWords++;
+
+
+        if (message) {
+
+            message.textContent =
+                "You got it! 👍";
+
+        }
 
     }
 
@@ -337,10 +601,78 @@ function finishWord() {
 }
 
 
+// ------------------------------------------------------
+// RECORD PERMANENT WORD HISTORY
+// ------------------------------------------------------
 
-// ------------------------------------
+function recordWordHistory(
+    word,
+    missed
+) {
+
+    const profileHistory =
+        history[selectedProfileId];
+
+
+    profileHistory.wordsPracticed++;
+
+
+    if (
+        !profileHistory.wordStats[word]
+    ) {
+
+        profileHistory.wordStats[word] = {
+
+            attempts: 0,
+            perfect: 0,
+            missed: 0,
+
+            lastPracticed:
+                null
+
+        };
+
+    }
+
+
+    const stats =
+        profileHistory.wordStats[word];
+
+
+    stats.attempts++;
+
+
+    stats.lastPracticed =
+        new Date().toISOString();
+
+
+    if (missed) {
+
+        stats.missed++;
+
+        profileHistory
+            .missedWords++;
+
+    }
+
+    else {
+
+        stats.perfect++;
+
+        profileHistory
+            .perfectWords++;
+
+    }
+
+
+    saveHistory();
+
+}
+
+
+// ------------------------------------------------------
 // PERFECT WORD ANIMATION
-// ------------------------------------
+// ------------------------------------------------------
 
 function showCelebration() {
 
@@ -350,24 +682,36 @@ function showCelebration() {
         "⭐ NAILED IT!",
         "🔥 PERFECT!",
         "😎 NICE!",
-        "🚀 GREAT JOB!"
+        "🚀 GREAT JOB!",
+        "💯 TOO EASY!",
+        "🏆 LET'S GO!"
 
     ];
 
 
-    message.textContent =
+    if (message) {
 
-        messages[
-            Math.floor(
-                Math.random() *
-                messages.length
-            )
-        ];
+        message.textContent =
+
+            messages[
+                Math.floor(
+                    Math.random()
+                    *
+                    messages.length
+                )
+            ];
+
+    }
 
 
-    practiceCard
-        .classList
-        .add("success");
+    if (!practiceCard) {
+        return;
+    }
+
+
+    practiceCard.classList.add(
+        "success"
+    );
 
 
     setTimeout(
@@ -383,8 +727,17 @@ function showCelebration() {
     );
 
 
-    const emojis =
-        ["⭐", "🎉", "🚀", "😎", "✨"];
+    const emojis = [
+
+        "⭐",
+        "🎉",
+        "🚀",
+        "😎",
+        "✨",
+        "🔥",
+        "💯"
+
+    ];
 
 
     for (
@@ -394,7 +747,9 @@ function showCelebration() {
     ) {
 
         const emoji =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         emoji.className =
@@ -405,14 +760,20 @@ function showCelebration() {
 
             emojis[
                 Math.floor(
-                    Math.random() *
+                    Math.random()
+                    *
                     emojis.length
                 )
             ];
 
 
         emoji.style.left =
-            (20 + Math.random() * 60)
+
+            (
+                20
+                +
+                Math.random() * 60
+            )
             + "%";
 
 
@@ -420,12 +781,15 @@ function showCelebration() {
             "50px";
 
 
-        practiceCard
-            .appendChild(emoji);
+        practiceCard.appendChild(
+            emoji
+        );
 
 
         setTimeout(
-            () => emoji.remove(),
+            () =>
+                emoji.remove(),
+
             1300
         );
 
@@ -434,18 +798,24 @@ function showCelebration() {
 }
 
 
-
-// ------------------------------------
-// RESULTS SIDEBAR
-// ------------------------------------
+// ------------------------------------------------------
+// ADD RESULT TO TODAY'S SIDEBAR
+// ------------------------------------------------------
 
 function addResult(
     word,
     missed
 ) {
 
+    if (!resultsList) {
+        return;
+    }
+
+
     const item =
-        document.createElement("li");
+        document.createElement(
+            "li"
+        );
 
 
     if (missed) {
@@ -469,45 +839,61 @@ function addResult(
     }
 
 
-    resultsList.appendChild(item);
+    resultsList.appendChild(
+        item
+    );
 
 }
 
 
-
-// ------------------------------------
-// SCORE
-// ------------------------------------
+// ------------------------------------------------------
+// UPDATE SCORE
+// ------------------------------------------------------
 
 function updateScore() {
 
+    if (!score) {
+        return;
+    }
+
+
     score.textContent =
 
-        "Correct: " +
-        correctWords;
+        "Perfect: "
+        + correctWords
+        +
+        "   |   Missed: "
+        + missedWords;
 
 }
 
 
-
-// ------------------------------------
+// ------------------------------------------------------
 // NEXT WORD
-// ------------------------------------
+// ------------------------------------------------------
 
 function nextWord() {
 
     currentWordIndex++;
 
-    currentLetterIndex = 0;
+    currentLetterIndex =
+        0;
 
-    currentWordMissed = false;
-
-    letterInput.disabled =
+    currentWordMissed =
         false;
 
 
+    if (letterInput) {
+
+        letterInput.disabled =
+            false;
+
+    }
+
+
     if (
-        currentWordIndex >=
+        currentWordIndex
+        >=
         spellingWords.length
     ) {
 
@@ -518,51 +904,84 @@ function nextWord() {
     }
 
 
-    message.textContent = "";
+    if (message) {
+
+        message.textContent =
+            "";
+
+    }
 
 
     showWord();
 
 
+    // Automatically says every word
+    // after the first one.
+
     speakWord();
 
 
-    letterInput.focus();
+    if (letterInput) {
+
+        letterInput.focus();
+
+    }
 
 }
 
 
-
-// ------------------------------------
-// FINISH LIST
-// ------------------------------------
+// ------------------------------------------------------
+// FINISH ENTIRE PRACTICE SESSION
+// ------------------------------------------------------
 
 function finishPractice() {
 
-    wordDisplay.textContent =
-        "🏆";
-
-    message.textContent =
-        "Practice Complete!";
-
-    progress.textContent =
-
-        correctWords +
-        " perfect out of " +
-        spellingWords.length;
+    saveSessionHistory();
 
 
-    letterInput.style.display =
-        "none";
+    if (wordDisplay) {
+
+        wordDisplay.textContent =
+            "🏆";
+
+    }
 
 
-    document
-        .getElementById(
-            "speakButton"
-        )
-        .style
-        .display =
-        "none";
+    if (message) {
+
+        message.textContent =
+            "Practice Complete!";
+
+    }
+
+
+    if (progress) {
+
+        progress.textContent =
+
+            correctWords
+            +
+            " perfect out of "
+            +
+            spellingWords.length;
+
+    }
+
+
+    if (letterInput) {
+
+        letterInput.style.display =
+            "none";
+
+    }
+
+
+    if (speakButton) {
+
+        speakButton.style.display =
+            "none";
+
+    }
 
 
     showCelebration();
@@ -570,45 +989,112 @@ function finishPractice() {
 }
 
 
+// ------------------------------------------------------
+// SAVE SESSION HISTORY
+// ------------------------------------------------------
 
-// ------------------------------------
-// KEYBOARD INPUT
-// ------------------------------------
+function saveSessionHistory() {
 
-letterInput.addEventListener(
-
-    "input",
-
-    function () {
-
-        const typed =
-            letterInput.value;
+    const profileHistory =
+        history[selectedProfileId];
 
 
-        if (typed.length > 0) {
+    const session = {
 
-            const letter =
+        date:
+            new Date().toISOString(),
 
-                typed.charAt(
-                    typed.length - 1
-                );
+        totalWords:
+            spellingWords.length,
+
+        perfect:
+            correctWords,
+
+        missed:
+            missedWords,
+
+        results:
+            sessionResults
+
+    };
 
 
-            handleLetter(letter);
+    profileHistory.sessions.unshift(
+        session
+    );
 
-        }
 
+    // Keep the latest 100 sessions.
 
-        letterInput.value = "";
+    if (
+        profileHistory.sessions.length
+        > 100
+    ) {
+
+        profileHistory.sessions =
+            profileHistory.sessions.slice(
+                0,
+                100
+            );
 
     }
 
-);
+
+    saveHistory();
+
+}
 
 
+// ------------------------------------------------------
+// KEYBOARD INPUT
+// ------------------------------------------------------
 
-// ------------------------------------
-// START DISPLAY
-// ------------------------------------
+if (letterInput) {
+
+    letterInput.addEventListener(
+
+        "input",
+
+        function () {
+
+            const typed =
+                letterInput.value;
+
+
+            if (
+                typed.length > 0
+            ) {
+
+                const letter =
+
+                    typed.charAt(
+                        typed.length - 1
+                    );
+
+
+                handleLetter(
+                    letter
+                );
+
+            }
+
+
+            // Clear input after each key.
+
+            letterInput.value =
+                "";
+
+        }
+
+    );
+
+}
+
+
+// ------------------------------------------------------
+// START PAGE
+// ------------------------------------------------------
 
 showWord();
+
+updateScore();
