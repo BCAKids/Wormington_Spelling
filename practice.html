@@ -14,10 +14,21 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
             background: #f4f7fb;
             color: #222;
-            padding: 30px 20px;
+        }
+
+        .page {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* LEFT SIDE - PRACTICE */
+
+        .practiceArea {
+            flex: 1;
+            text-align: center;
+            padding: 35px 20px;
         }
 
         h1 {
@@ -79,40 +90,113 @@
             display: inline-block;
             margin-top: 40px;
         }
+
+        /* RIGHT SIDE - RESULTS */
+
+        .resultsPanel {
+            width: 260px;
+            background: white;
+            border-left: 1px solid #ddd;
+            padding: 25px;
+        }
+
+        .resultsPanel h2 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        #resultsList {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #resultsList li {
+            padding: 10px 5px;
+            border-bottom: 1px solid #eee;
+            font-size: 20px;
+        }
+
+        .correct {
+            color: #188038;
+        }
+
+        .missed {
+            color: #d93025;
+        }
+
+        /* PHONE / SMALL SCREEN */
+
+        @media (max-width: 700px) {
+
+            .page {
+                display: block;
+            }
+
+            .resultsPanel {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #ddd;
+                margin-top: 20px;
+            }
+
+        }
     </style>
 </head>
 
 <body>
 
-    <h1>Wormington Spelling</h1>
+<div class="page">
 
-    <h2 id="weekTitle"></h2>
+    <main class="practiceArea">
 
-    <button id="speakButton" type="button" onclick="speakWord()">
-        🔊 Say Word
-    </button>
+        <h1>Wormington Spelling</h1>
 
-    <div id="wordDisplay"></div>
+        <h2 id="weekTitle"></h2>
 
-    <input
-        id="hiddenInput"
-        type="text"
-        placeholder="Type a letter..."
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-    >
+        <button
+            id="speakButton"
+            type="button"
+            onclick="speakWord()">
 
-    <div id="message"></div>
+            🔊 Say Word
 
-    <div id="progress"></div>
+        </button>
 
-    <a class="backLink" href="index.html">
-        ← Choose Another Week
-    </a>
+        <div id="wordDisplay"></div>
 
-    <script src="app.js?v=2"></script>
+        <input
+            id="hiddenInput"
+            type="text"
+            placeholder="Type a letter..."
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+        >
+
+        <div id="message"></div>
+
+        <div id="progress"></div>
+
+        <a class="backLink" href="index.html">
+            ← Choose Another Week
+        </a>
+
+    </main>
+
+
+    <aside class="resultsPanel">
+
+        <h2>Progress</h2>
+
+        <ul id="resultsList"></ul>
+
+    </aside>
+
+</div>
+
+<script src="app.js?v=3"></script>
 
 </body>
 </html>
