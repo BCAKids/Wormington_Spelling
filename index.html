@@ -72,6 +72,14 @@
                 View History
             </a>
 
+            <button
+                class="clear-button"
+                type="button"
+                onclick="clearProfile(event, 'raccoon')"
+            >
+                Clear Profile
+            </button>
+
         </div>
 
 
@@ -107,6 +115,14 @@
                 View History
             </a>
 
+            <button
+                class="clear-button"
+                type="button"
+                onclick="clearProfile(event, 'potato')"
+            >
+                Clear Profile
+            </button>
+
         </div>
 
 
@@ -141,6 +157,14 @@
             >
                 View History
             </a>
+
+            <button
+                class="clear-button"
+                type="button"
+                onclick="clearProfile(event, 'bird')"
+            >
+                Clear Profile
+            </button>
 
         </div>
 
@@ -422,6 +446,58 @@ function showProfileSummaries() {
             + troubleWords;
 
     }
+
+}
+
+
+
+function clearProfile(
+    event,
+    profileId
+) {
+
+    event.stopPropagation();
+
+
+    const profileName =
+        profiles[profileId].name;
+
+
+    const confirmed =
+        confirm(
+            "Clear all saved history for "
+            + profileName
+            + "?"
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    const history =
+        loadHistory();
+
+
+    history[profileId] = {
+
+        sessions: [],
+        wordsPracticed: 0,
+        perfectWords: 0,
+        missedWords: 0,
+        wordStats: {}
+
+    };
+
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(history)
+    );
+
+
+    showProfileSummaries();
 
 }
 
