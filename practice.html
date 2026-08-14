@@ -3,19 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Spelling Practice</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px 20px;
+            background: #f4f7fb;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        #weekTitle {
+            color: #666;
+            margin-top: 0;
+        }
+
+        #wordDisplay {
+            font-size: 42px;
+            letter-spacing: 10px;
+            margin: 40px 0;
+            min-height: 60px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 14px 22px;
+            margin: 8px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #speakButton {
+            background: #4285f4;
+            color: white;
+        }
+
+        #message {
+            font-size: 24px;
+            font-weight: bold;
+            min-height: 35px;
+        }
+
+        #progress {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #666;
+        }
+
+        #hiddenInput {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 35px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Spelling Practice</h1>
-
+    <h1>Wormington Spelling</h1>
     <h2 id="weekTitle"></h2>
 
-    <button onclick="speakWord()">🔊 Say Word</button>
+    <button id="speakButton" onclick="speakWord()">🔊 Say Word</button>
 
-    <h2 id="wordDisplay"></h2>
+    <div id="wordDisplay"></div>
+
+    <div id="message"></div>
+
+    <div id="progress"></div>
+
+    <input
+        id="hiddenInput"
+        type="text"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+    >
 
     <p>
         <a href="index.html">← Choose Another Week</a>
