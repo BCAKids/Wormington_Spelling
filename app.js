@@ -1,52 +1,54 @@
-const lists = {
+const spellingWords = [
 
-    1: [
-        "apple",
-        "dog",
-        "house",
-        "yellow",
-        "school"
-    ],
+    "confer",
+    "deferential",
+    "infer",
+    "reference",
+    "suffer",
+    "vociferous",
+    "monolith",
+    "monotone",
+    "monotony",
+    "activated",
+    "adorned",
+    "announced",
+    "confessed",
+    "deposited",
+    "disguised",
+    "fastened",
+    "guided",
+    "imagined",
+    "interrupted",
+    "whispered",
+    "conifer",
+    "defer",
+    "fertile",
+    "referendum",
+    "transfer",
+    "carbon monoxide",
+    "monarchy",
+    "monochrome",
+    "monogram",
+    "monologue",
+    "monotheism",
+    "attempted",
+    "celebrated",
+    "persuaded",
+    "unresolved"
 
-    2: [
-        "because",
-        "friend",
-        "little",
-        "people",
-        "pretty"
-    ],
-
-    3: [
-        "different",
-        "important",
-        "thought",
-        "through",
-        "enough"
-    ]
-
-};
+];
 
 
-// Get week from URL
-const params = new URLSearchParams(window.location.search);
-const week = params.get("week") || "1";
 
-const spellingWords = lists[week];
-
-
-// Current position
 let currentWordIndex = 0;
+
 let currentLetterIndex = 0;
 
-
-// Tracks whether child made a mistake
-// on the CURRENT word
 let currentWordMissed = false;
 
+let correctWords = 0;
 
-// Page elements
-const weekTitle =
-    document.getElementById("weekTitle");
+
 
 const wordDisplay =
     document.getElementById("wordDisplay");
@@ -57,14 +59,17 @@ const message =
 const progress =
     document.getElementById("progress");
 
-const hiddenInput =
-    document.getElementById("hiddenInput");
+const letterInput =
+    document.getElementById("letterInput");
 
 const resultsList =
     document.getElementById("resultsList");
 
+const score =
+    document.getElementById("score");
 
-weekTitle.textContent = "Week " + week;
+const practiceCard =
+    document.getElementById("practiceCard");
 
 
 
@@ -72,20 +77,39 @@ weekTitle.textContent = "Week " + week;
 // DISPLAY WORD
 // ------------------------------------
 
-function showWordBlanks() {
+function showWord() {
 
-    const word = spellingWords[currentWordIndex];
+    const word =
+        spellingWords[currentWordIndex];
 
     let display = "";
 
-    for (let i = 0; i < word.length; i++) {
+
+    for (
+        let i = 0;
+        i < word.length;
+        i++
+    ) {
+
+        // Spaces appear automatically
+
+        if (word[i] === " ") {
+
+            display += "   ";
+
+            continue;
+
+        }
+
 
         if (i < currentLetterIndex) {
 
             display +=
                 word[i].toUpperCase() + " ";
 
-        } else {
+        }
+
+        else {
 
             display += "_ ";
 
@@ -93,13 +117,17 @@ function showWordBlanks() {
 
     }
 
+
     wordDisplay.textContent = display;
 
+
     progress.textContent =
+
         "Word " +
         (currentWordIndex + 1) +
         " of " +
         spellingWords.length;
+
 }
 
 
@@ -113,56 +141,33 @@ function speakWord() {
     const word =
         spellingWords[currentWordIndex];
 
+
     const speech =
         new SpeechSynthesisUtterance(word);
 
+
     speech.lang = "en-US";
-    speech.rate = 0.7;
+
+    speech.rate = 0.72;
+
     speech.pitch = 1;
+
     speech.volume = 1;
-
-    const voices =
-        speechSynthesis.getVoices();
-
-    const preferredVoice =
-
-        voices.find(v =>
-            v.lang === "en-US" &&
-            v.name.toLowerCase().includes("samantha")
-        )
-
-        ||
-
-        voices.find(v =>
-            v.lang === "en-US"
-        )
-
-        ||
-
-        voices.find(v =>
-            v.lang.startsWith("en")
-        );
-
-
-    if (preferredVoice) {
-
-        speech.voice =
-            preferredVoice;
-
-    }
 
 
     speechSynthesis.cancel();
 
     speechSynthesis.speak(speech);
 
-    hiddenInput.focus();
+
+    letterInput.focus();
+
 }
 
 
 
 // ------------------------------------
-// CHECK LETTER
+// HANDLE TYPED LETTER
 // ------------------------------------
 
 function handleLetter(letter) {
@@ -170,28 +175,49 @@ function handleLetter(letter) {
     const word =
         spellingWords[currentWordIndex];
 
+
+    // Skip spaces automatically
+
+    while (
+        word[currentLetterIndex] === " "
+    ) {
+
+        currentLetterIndex++;
+
+    }
+
+
     const correctLetter =
         word[currentLetterIndex].toLowerCase();
 
 
     if (
-        letter.toLowerCase()
-        ===
+        letter.toLowerCase() ===
         correctLetter
     ) {
 
         currentLetterIndex++;
 
-        message.textContent =
-            "✓ Correct";
 
-        showWordBlanks();
+        // Skip space after correct letter
+
+        while (
+            word[currentLetterIndex] === " "
+        ) {
+
+            currentLetterIndex++;
+
+        }
 
 
-        // Word completed
+        showWord();
+
+
+        message.textContent = "✓";
+
+
         if (
-            currentLetterIndex
-            ===
+            currentLetterIndex >=
             word.length
         ) {
 
@@ -203,15 +229,64 @@ function handleLetter(letter) {
 
     else {
 
-        // Remember that THIS word
-        // had at least one mistake
-
         currentWordMissed = true;
 
-        message.textContent =
-            "❌ Try again";
+        showWrongAnimation();
 
     }
+
+}
+
+
+
+// ------------------------------------
+// WRONG LETTER
+// ------------------------------------
+
+function showWrongAnimation() {
+
+    const funnyMessages = [
+
+        "Nope! 😜",
+        "Almost! 🤪",
+        "Try that again! 🫣",
+        "Oops! 🙃",
+        "Not that one! 😂",
+        "Nice try! 😎"
+
+    ];
+
+
+    const randomMessage =
+
+        funnyMessages[
+            Math.floor(
+                Math.random() *
+                funnyMessages.length
+            )
+        ];
+
+
+    message.textContent =
+        randomMessage;
+
+
+    practiceCard.classList.add(
+        "shake"
+    );
+
+
+    setTimeout(
+        () => {
+
+            practiceCard
+                .classList
+                .remove("shake");
+
+        },
+
+        400
+    );
 
 }
 
@@ -233,27 +308,30 @@ function finishWord() {
     );
 
 
+    letterInput.disabled = true;
+
+
     if (currentWordMissed) {
 
         message.textContent =
-            "Good job finishing it!";
+            "You got it! 👍";
 
     }
 
     else {
 
-        message.textContent =
-            "🎉 Perfect!";
+        correctWords++;
+
+        updateScore();
+
+        showCelebration();
 
     }
 
 
-    hiddenInput.disabled = true;
-
-
     setTimeout(
         nextWord,
-        1500
+        1700
     );
 
 }
@@ -261,10 +339,110 @@ function finishWord() {
 
 
 // ------------------------------------
-// ADD WORD TO SIDEBAR
+// PERFECT WORD ANIMATION
 // ------------------------------------
 
-function addResult(word, missed) {
+function showCelebration() {
+
+    const messages = [
+
+        "🎉 AWESOME!",
+        "⭐ NAILED IT!",
+        "🔥 PERFECT!",
+        "😎 NICE!",
+        "🚀 GREAT JOB!"
+
+    ];
+
+
+    message.textContent =
+
+        messages[
+            Math.floor(
+                Math.random() *
+                messages.length
+            )
+        ];
+
+
+    practiceCard
+        .classList
+        .add("success");
+
+
+    setTimeout(
+        () => {
+
+            practiceCard
+                .classList
+                .remove("success");
+
+        },
+
+        600
+    );
+
+
+    const emojis =
+        ["⭐", "🎉", "🚀", "😎", "✨"];
+
+
+    for (
+        let i = 0;
+        i < 7;
+        i++
+    ) {
+
+        const emoji =
+            document.createElement("div");
+
+
+        emoji.className =
+            "celebration";
+
+
+        emoji.textContent =
+
+            emojis[
+                Math.floor(
+                    Math.random() *
+                    emojis.length
+                )
+            ];
+
+
+        emoji.style.left =
+            (20 + Math.random() * 60)
+            + "%";
+
+
+        emoji.style.bottom =
+            "50px";
+
+
+        practiceCard
+            .appendChild(emoji);
+
+
+        setTimeout(
+            () => emoji.remove(),
+            1300
+        );
+
+    }
+
+}
+
+
+
+// ------------------------------------
+// RESULTS SIDEBAR
+// ------------------------------------
+
+function addResult(
+    word,
+    missed
+) {
 
     const item =
         document.createElement("li");
@@ -298,6 +476,21 @@ function addResult(word, missed) {
 
 
 // ------------------------------------
+// SCORE
+// ------------------------------------
+
+function updateScore() {
+
+    score.textContent =
+
+        "Correct: " +
+        correctWords;
+
+}
+
+
+
+// ------------------------------------
 // NEXT WORD
 // ------------------------------------
 
@@ -309,28 +502,16 @@ function nextWord() {
 
     currentWordMissed = false;
 
-    hiddenInput.disabled = false;
+    letterInput.disabled =
+        false;
 
 
-    // Finished entire list
     if (
-        currentWordIndex
-        >=
+        currentWordIndex >=
         spellingWords.length
     ) {
 
-        wordDisplay.textContent =
-            "🎉";
-
-        message.textContent =
-            "You finished Week "
-            + week +
-            "!";
-
-        progress.textContent = "";
-
-        hiddenInput.style.display =
-            "none";
+        finishPractice();
 
         return;
 
@@ -339,404 +520,52 @@ function nextWord() {
 
     message.textContent = "";
 
-    showWordBlanks();
+
+    showWord();
 
 
-    // Automatically say next word
     speakWord();
 
 
-    hiddenInput.focus();
+    letterInput.focus();
 
 }
 
 
 
 // ------------------------------------
-// KEYBOARD INPUT
+// FINISH LIST
 // ------------------------------------
 
-hiddenInput.addEventListener(
-    "input",
-    function () {
+function finishPractice() {
 
-        const typed =
-            hiddenInput.value;
+    wordDisplay.textContent =
+        "🏆";
 
-
-        if (typed.length > 0) {
-
-            const letter =
-                typed.charAt(
-                    typed.length - 1
-                );
-
-            handleLetter(letter);
-
-        }
-
-
-        // Always empty input field
-        hiddenInput.value = "";
-
-    }
-);
-
-
-
-// ------------------------------------
-// START
-// ------------------------------------
-
-showWordBlanks();const lists = {
-
-    1: [
-        "apple",
-        "dog",
-        "house",
-        "yellow",
-        "school"
-    ],
-
-    2: [
-        "because",
-        "friend",
-        "little",
-        "people",
-        "pretty"
-    ],
-
-    3: [
-        "different",
-        "important",
-        "thought",
-        "through",
-        "enough"
-    ]
-
-};
-
-
-// Get week from URL
-const params = new URLSearchParams(window.location.search);
-const week = params.get("week") || "1";
-
-const spellingWords = lists[week];
-
-
-// Current position
-let currentWordIndex = 0;
-let currentLetterIndex = 0;
-
-
-// Tracks whether child made a mistake
-// on the CURRENT word
-let currentWordMissed = false;
-
-
-// Page elements
-const weekTitle =
-    document.getElementById("weekTitle");
-
-const wordDisplay =
-    document.getElementById("wordDisplay");
-
-const message =
-    document.getElementById("message");
-
-const progress =
-    document.getElementById("progress");
-
-const hiddenInput =
-    document.getElementById("hiddenInput");
-
-const resultsList =
-    document.getElementById("resultsList");
-
-
-weekTitle.textContent = "Week " + week;
-
-
-
-// ------------------------------------
-// DISPLAY WORD
-// ------------------------------------
-
-function showWordBlanks() {
-
-    const word = spellingWords[currentWordIndex];
-
-    let display = "";
-
-    for (let i = 0; i < word.length; i++) {
-
-        if (i < currentLetterIndex) {
-
-            display +=
-                word[i].toUpperCase() + " ";
-
-        } else {
-
-            display += "_ ";
-
-        }
-
-    }
-
-    wordDisplay.textContent = display;
+    message.textContent =
+        "Practice Complete!";
 
     progress.textContent =
-        "Word " +
-        (currentWordIndex + 1) +
-        " of " +
+
+        correctWords +
+        " perfect out of " +
         spellingWords.length;
-}
 
 
+    letterInput.style.display =
+        "none";
 
-// ------------------------------------
-// SPEAK WORD
-// ------------------------------------
 
-function speakWord() {
-
-    const word =
-        spellingWords[currentWordIndex];
-
-    const speech =
-        new SpeechSynthesisUtterance(word);
-
-    speech.lang = "en-US";
-    speech.rate = 0.7;
-    speech.pitch = 1;
-    speech.volume = 1;
-
-    const voices =
-        speechSynthesis.getVoices();
-
-    const preferredVoice =
-
-        voices.find(v =>
-            v.lang === "en-US" &&
-            v.name.toLowerCase().includes("samantha")
+    document
+        .getElementById(
+            "speakButton"
         )
+        .style
+        .display =
+        "none";
 
-        ||
 
-        voices.find(v =>
-            v.lang === "en-US"
-        )
-
-        ||
-
-        voices.find(v =>
-            v.lang.startsWith("en")
-        );
-
-
-    if (preferredVoice) {
-
-        speech.voice =
-            preferredVoice;
-
-    }
-
-
-    speechSynthesis.cancel();
-
-    speechSynthesis.speak(speech);
-
-    hiddenInput.focus();
-}
-
-
-
-// ------------------------------------
-// CHECK LETTER
-// ------------------------------------
-
-function handleLetter(letter) {
-
-    const word =
-        spellingWords[currentWordIndex];
-
-    const correctLetter =
-        word[currentLetterIndex].toLowerCase();
-
-
-    if (
-        letter.toLowerCase()
-        ===
-        correctLetter
-    ) {
-
-        currentLetterIndex++;
-
-        message.textContent =
-            "✓ Correct";
-
-        showWordBlanks();
-
-
-        // Word completed
-        if (
-            currentLetterIndex
-            ===
-            word.length
-        ) {
-
-            finishWord();
-
-        }
-
-    }
-
-    else {
-
-        // Remember that THIS word
-        // had at least one mistake
-
-        currentWordMissed = true;
-
-        message.textContent =
-            "❌ Try again";
-
-    }
-
-}
-
-
-
-// ------------------------------------
-// FINISH WORD
-// ------------------------------------
-
-function finishWord() {
-
-    const word =
-        spellingWords[currentWordIndex];
-
-
-    addResult(
-        word,
-        currentWordMissed
-    );
-
-
-    if (currentWordMissed) {
-
-        message.textContent =
-            "Good job finishing it!";
-
-    }
-
-    else {
-
-        message.textContent =
-            "🎉 Perfect!";
-
-    }
-
-
-    hiddenInput.disabled = true;
-
-
-    setTimeout(
-        nextWord,
-        1500
-    );
-
-}
-
-
-
-// ------------------------------------
-// ADD WORD TO SIDEBAR
-// ------------------------------------
-
-function addResult(word, missed) {
-
-    const item =
-        document.createElement("li");
-
-
-    if (missed) {
-
-        item.textContent =
-            "❌ " + word;
-
-        item.className =
-            "missed";
-
-    }
-
-    else {
-
-        item.textContent =
-            "✅ " + word;
-
-        item.className =
-            "correct";
-
-    }
-
-
-    resultsList.appendChild(item);
-
-}
-
-
-
-// ------------------------------------
-// NEXT WORD
-// ------------------------------------
-
-function nextWord() {
-
-    currentWordIndex++;
-
-    currentLetterIndex = 0;
-
-    currentWordMissed = false;
-
-    hiddenInput.disabled = false;
-
-
-    // Finished entire list
-    if (
-        currentWordIndex
-        >=
-        spellingWords.length
-    ) {
-
-        wordDisplay.textContent =
-            "🎉";
-
-        message.textContent =
-            "You finished Week "
-            + week +
-            "!";
-
-        progress.textContent = "";
-
-        hiddenInput.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    message.textContent = "";
-
-    showWordBlanks();
-
-
-    // Automatically say next word
-    speakWord();
-
-
-    hiddenInput.focus();
+    showCelebration();
 
 }
 
@@ -746,36 +575,40 @@ function nextWord() {
 // KEYBOARD INPUT
 // ------------------------------------
 
-hiddenInput.addEventListener(
+letterInput.addEventListener(
+
     "input",
+
     function () {
 
         const typed =
-            hiddenInput.value;
+            letterInput.value;
 
 
         if (typed.length > 0) {
 
             const letter =
+
                 typed.charAt(
                     typed.length - 1
                 );
+
 
             handleLetter(letter);
 
         }
 
 
-        // Always empty input field
-        hiddenInput.value = "";
+        letterInput.value = "";
 
     }
+
 );
 
 
 
 // ------------------------------------
-// START
+// START DISPLAY
 // ------------------------------------
 
-showWordBlanks();
+showWord();
