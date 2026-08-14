@@ -1,1 +1,1052 @@
+/* =====================================================
+   WORMINGTON SPELLING
+   Shared Styles
+   ===================================================== */
 
+
+/* -----------------------------
+   GLOBAL
+----------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f3f6fb;
+    color: #222;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =====================================================
+   START / PROFILE PAGE
+   ===================================================== */
+
+.home-page {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef4ff,
+            #f8f5ff
+        );
+}
+
+.container {
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 42px;
+}
+
+.header p {
+    margin-top: 10px;
+    color: #666;
+    font-size: 21px;
+}
+
+
+/* PROFILE GRID */
+
+.profiles {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.profile-card {
+    background: white;
+
+    border:
+        4px solid transparent;
+
+    border-radius: 24px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+
+    cursor: pointer;
+
+    transition:
+        transform .18s,
+        border-color .18s,
+        box-shadow .18s;
+}
+
+.profile-card:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.12);
+}
+
+.profile-card.selected {
+    border-color: #4285f4;
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(66,133,244,.12),
+
+        0 12px 30px
+        rgba(0,0,0,.12);
+}
+
+
+/* PROFILE CHARACTER */
+
+.profile-image {
+    width: 180px;
+    height: 180px;
+
+    max-width: 100%;
+
+    object-fit: contain;
+
+    margin-bottom: 8px;
+
+    transition:
+        transform .2s;
+}
+
+.profile-card:hover
+.profile-image {
+    transform:
+        scale(1.04);
+}
+
+.profile-name {
+    font-size: 26px;
+    font-weight: bold;
+
+    margin-bottom: 12px;
+}
+
+.history-summary {
+    min-height: 72px;
+
+    color: #666;
+
+    line-height: 1.6;
+
+    font-size: 16px;
+
+    margin-bottom: 16px;
+}
+
+
+/* HISTORY BUTTON */
+
+.history-button {
+    display: inline-block;
+
+    width: 100%;
+
+    text-decoration: none;
+
+    background: #f0f3f8;
+
+    color: #333;
+
+    border-radius: 12px;
+
+    padding: 11px 12px;
+
+    font-weight: bold;
+
+    transition:
+        background .15s,
+        transform .15s;
+}
+
+.history-button:hover {
+    background: #e2e7ef;
+}
+
+.history-button:active {
+    transform:
+        scale(.97);
+}
+
+
+/* START PRACTICE */
+
+.start-area {
+    max-width: 500px;
+
+    margin:
+        35px auto 0;
+
+    text-align: center;
+}
+
+.selected-label {
+    color: #666;
+
+    min-height: 28px;
+
+    margin-bottom: 12px;
+
+    font-size: 18px;
+}
+
+#startButton {
+    width: 100%;
+
+    padding: 18px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #4285f4;
+
+    color: white;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 15px
+        rgba(66,133,244,.25);
+
+    transition:
+        transform .15s,
+        opacity .15s,
+        box-shadow .15s;
+}
+
+#startButton:hover:not(:disabled) {
+    box-shadow:
+        0 8px 20px
+        rgba(66,133,244,.35);
+}
+
+#startButton:active:not(:disabled) {
+    transform:
+        scale(.97);
+}
+
+#startButton:disabled {
+    opacity: .45;
+
+    cursor:
+        not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =====================================================
+   PRACTICE PAGE
+   ===================================================== */
+
+.page {
+    display: flex;
+
+    min-height: 100vh;
+}
+
+
+/* MAIN PRACTICE AREA */
+
+.practice-area {
+    flex: 1;
+
+    padding: 25px;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.practice-card {
+    width: 100%;
+
+    max-width: 800px;
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding:
+        28px 30px 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.08);
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+
+/* CURRENT PROFILE BAR */
+
+.profile-bar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+        space-between;
+
+    gap: 15px;
+
+    margin-bottom: 15px;
+}
+
+.profile-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+#profileImage {
+    width: 72px;
+    height: 72px;
+
+    object-fit: contain;
+}
+
+#profileName {
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.profile-subtitle {
+    color: #777;
+
+    font-size: 14px;
+
+    margin-top: 2px;
+}
+
+
+/* PRACTICE HISTORY BUTTON */
+
+.profile-bar
+.history-button {
+    width: auto;
+
+    padding:
+        10px 16px;
+}
+
+
+/* TITLE */
+
+.practice-card h1 {
+    margin:
+        10px 0 5px;
+
+    font-size: 32px;
+}
+
+
+/* SCORE */
+
+#score {
+    color: #666;
+
+    font-size: 18px;
+
+    margin-bottom: 25px;
+}
+
+
+/* HEAR WORD BUTTON */
+
+#speakButton {
+    border: none;
+
+    background: #4285f4;
+
+    color: white;
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    padding:
+        15px 28px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px
+        rgba(66,133,244,.25);
+
+    transition:
+        transform .15s,
+        box-shadow .15s;
+}
+
+#speakButton:hover {
+    box-shadow:
+        0 7px 16px
+        rgba(66,133,244,.32);
+}
+
+#speakButton:active {
+    transform:
+        scale(.97);
+}
+
+
+/* WORD */
+
+#wordDisplay {
+    font-size: 46px;
+
+    font-weight: bold;
+
+    letter-spacing: 8px;
+
+    margin:
+        42px 0 25px;
+
+    min-height: 65px;
+
+    word-wrap: break-word;
+}
+
+
+/* LETTER INPUT */
+
+#letterInput {
+    width: 320px;
+
+    max-width: 90%;
+
+    padding: 15px;
+
+    font-size: 24px;
+
+    text-align: center;
+
+    border:
+        3px solid #d0d5dd;
+
+    border-radius: 14px;
+
+    outline: none;
+
+    transition:
+        border-color .15s,
+        box-shadow .15s;
+}
+
+#letterInput:focus {
+    border-color: #4285f4;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(66,133,244,.10);
+}
+
+
+/* FEEDBACK */
+
+#message {
+    font-size: 30px;
+
+    font-weight: bold;
+
+    min-height: 50px;
+
+    margin-top: 18px;
+}
+
+#progress {
+    color: #777;
+
+    font-size: 18px;
+
+    margin-top: 12px;
+}
+
+
+/* BOTTOM LINKS */
+
+.bottom-links {
+    margin-top: 30px;
+}
+
+.bottom-links a {
+    color: #4285f4;
+
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+.bottom-links a:hover {
+    text-decoration:
+        underline;
+}
+
+
+/* SESSION SIDEBAR */
+
+.results-panel {
+    width: 290px;
+
+    background: white;
+
+    border-left:
+        1px solid #ddd;
+
+    padding: 25px;
+
+    overflow-y: auto;
+}
+
+.results-panel h2 {
+    margin-top: 0;
+
+    text-align: center;
+}
+
+.sidebar-subtitle {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-top: -8px;
+
+    margin-bottom: 18px;
+}
+
+#resultsList {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+#resultsList li {
+    padding:
+        10px 5px;
+
+    border-bottom:
+        1px solid #eee;
+
+    font-size: 18px;
+}
+
+.correct {
+    color: #188038;
+}
+
+.missed {
+    color: #d93025;
+}
+
+
+/* =====================================================
+   ANIMATIONS
+   ===================================================== */
+
+
+/* WRONG LETTER */
+
+.shake {
+    animation:
+        shake .35s;
+}
+
+@keyframes shake {
+
+    0% {
+        transform:
+            translateX(0);
+    }
+
+    20% {
+        transform:
+            translateX(-12px);
+    }
+
+    40% {
+        transform:
+            translateX(12px);
+    }
+
+    60% {
+        transform:
+            translateX(-8px);
+    }
+
+    80% {
+        transform:
+            translateX(8px);
+    }
+
+    100% {
+        transform:
+            translateX(0);
+    }
+}
+
+
+/* PERFECT WORD */
+
+.success {
+    animation:
+        successPop .55s;
+}
+
+@keyframes successPop {
+
+    0% {
+        transform:
+            scale(1);
+    }
+
+    50% {
+        transform:
+            scale(1.06);
+    }
+
+    100% {
+        transform:
+            scale(1);
+    }
+}
+
+
+/* FLOATING CELEBRATION */
+
+.celebration {
+    position: absolute;
+
+    font-size: 45px;
+
+    pointer-events: none;
+
+    animation:
+        fly 1.2s forwards;
+}
+
+@keyframes fly {
+
+    0% {
+        transform:
+            translateY(0)
+            scale(.5)
+            rotate(0deg);
+
+        opacity: 1;
+    }
+
+    100% {
+        transform:
+            translateY(-250px)
+            scale(1.5)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+
+}
+
+
+/* =====================================================
+   HISTORY PAGE
+   ===================================================== */
+
+.history-container {
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding:
+        30px 20px 50px;
+}
+
+.topbar {
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.back-button {
+    text-decoration: none;
+
+    color: #4285f4;
+
+    font-weight: bold;
+
+    font-size: 18px;
+}
+
+
+/* HISTORY PROFILE */
+
+.profile-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background: white;
+
+    padding:
+        20px 25px;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+
+    margin-bottom: 25px;
+}
+
+.profile-header img {
+    width: 120px;
+
+    height: 120px;
+
+    object-fit: contain;
+}
+
+.profile-header h1 {
+    margin:
+        0 0 5px;
+
+    font-size: 34px;
+}
+
+.profile-header p {
+    margin: 0;
+
+    color: #666;
+
+    font-size: 18px;
+}
+
+
+/* HISTORY SUMMARY CARDS */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.06);
+}
+
+.summary-number {
+    font-size: 32px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.summary-label {
+    color: #777;
+}
+
+
+/* HISTORY PANELS */
+
+.panel {
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 6px 20px
+        rgba(0,0,0,.06);
+}
+
+.panel h2 {
+    margin-top: 0;
+}
+
+
+/* TABLE */
+
+table {
+    width: 100%;
+
+    border-collapse:
+        collapse;
+}
+
+th,
+td {
+    text-align: left;
+
+    padding:
+        12px 10px;
+
+    border-bottom:
+        1px solid #eee;
+}
+
+th {
+    color: #666;
+}
+
+.bad {
+    color: #d93025;
+
+    font-weight: bold;
+}
+
+.good {
+    color: #188038;
+
+    font-weight: bold;
+}
+
+
+/* SESSION HISTORY */
+
+.session {
+    padding:
+        15px 0;
+
+    border-bottom:
+        1px solid #eee;
+}
+
+.session:last-child {
+    border-bottom: none;
+}
+
+.session-title {
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.session-details {
+    color: #666;
+}
+
+.empty {
+    color: #777;
+
+    text-align: center;
+
+    padding: 25px;
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 800px) {
+
+    .profiles {
+        grid-template-columns:
+            1fr;
+
+        max-width: 480px;
+
+        margin:
+            0 auto;
+    }
+
+    .profile-image {
+        width: 160px;
+        height: 160px;
+    }
+
+    .header h1 {
+        font-size: 34px;
+    }
+
+
+    /* PRACTICE */
+
+    .page {
+        display: block;
+    }
+
+    .practice-area {
+        padding: 12px;
+    }
+
+    .practice-card {
+        padding:
+            20px 15px 28px;
+    }
+
+    .results-panel {
+        width: 100%;
+
+        border-left: none;
+
+        border-top:
+            1px solid #ddd;
+    }
+
+    #wordDisplay {
+        font-size: 34px;
+
+        letter-spacing: 5px;
+    }
+
+    .profile-bar {
+        align-items:
+            flex-start;
+    }
+
+    #profileImage {
+        width: 58px;
+
+        height: 58px;
+    }
+
+    #profileName {
+        font-size: 19px;
+    }
+
+
+    /* HISTORY */
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .profile-header {
+        display: block;
+
+        text-align: center;
+    }
+
+    .profile-header img {
+        margin-bottom: 10px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+}
+
+
+/* EXTRA SMALL PHONE */
+
+@media (max-width: 450px) {
+
+    .container {
+        padding:
+            25px 14px 40px;
+    }
+
+    .header h1 {
+        font-size: 30px;
+    }
+
+    .profile-card {
+        padding: 15px;
+    }
+
+    #wordDisplay {
+        font-size: 29px;
+
+        letter-spacing: 3px;
+    }
+
+    #message {
+        font-size: 25px;
+    }
+
+    .summary-number {
+        font-size: 27px;
+    }
+
+}
