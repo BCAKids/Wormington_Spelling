@@ -74,12 +74,11 @@ const profiles = {
 };
 
 
-// Whichever profile was selected on the start screen.
-// Until we modify index.html, Raccoon will be the default.
-
 const selectedProfileId =
-    localStorage.getItem("wormingtonSelectedProfile")
-    || "raccoon";
+    localStorage.getItem(
+        "wormingtonSelectedProfile"
+    ) || "raccoon";
+
 
 const selectedProfile =
     profiles[selectedProfileId];
@@ -91,60 +90,6 @@ const selectedProfile =
 
 const HISTORY_KEY =
     "wormingtonSpellingHistory";
-
-
-function loadHistory() {
-
-    const saved =
-        localStorage.getItem(HISTORY_KEY);
-
-    if (!saved) {
-
-        return {
-            raccoon: createEmptyProfileHistory(),
-            potato: createEmptyProfileHistory(),
-            bird: createEmptyProfileHistory()
-        };
-
-    }
-
-    try {
-
-        const history =
-            JSON.parse(saved);
-
-        // Make sure all three profiles exist
-        for (const id of Object.keys(profiles)) {
-
-            if (!history[id]) {
-
-                history[id] =
-                    createEmptyProfileHistory();
-
-            }
-
-        }
-
-        return history;
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "Could not load spelling history:",
-            error
-        );
-
-        return {
-            raccoon: createEmptyProfileHistory(),
-            potato: createEmptyProfileHistory(),
-            bird: createEmptyProfileHistory()
-        };
-
-    }
-
-}
 
 
 function createEmptyProfileHistory() {
@@ -162,6 +107,74 @@ function createEmptyProfileHistory() {
 }
 
 
+function loadHistory() {
+
+    const saved =
+        localStorage.getItem(
+            HISTORY_KEY
+        );
+
+
+    if (!saved) {
+
+        return {
+            raccoon: createEmptyProfileHistory(),
+            potato: createEmptyProfileHistory(),
+            bird: createEmptyProfileHistory()
+        };
+
+    }
+
+
+    try {
+
+        const loadedHistory =
+            JSON.parse(saved);
+
+
+        for (
+            const id
+            of Object.keys(profiles)
+        ) {
+
+            if (!loadedHistory[id]) {
+
+                loadedHistory[id] =
+                    createEmptyProfileHistory();
+
+            }
+
+        }
+
+
+        return loadedHistory;
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "Could not load spelling history:",
+            error
+        );
+
+
+        return {
+            raccoon: createEmptyProfileHistory(),
+            potato: createEmptyProfileHistory(),
+            bird: createEmptyProfileHistory()
+        };
+
+    }
+
+}
+
+
+let history =
+    loadHistory();
+
+
 function saveHistory() {
 
     localStorage.setItem(
@@ -170,10 +183,6 @@ function saveHistory() {
     );
 
 }
-
-
-let history =
-    loadHistory();
 
 
 // ------------------------------------------------------
@@ -190,10 +199,11 @@ let correctWords = 0;
 
 let missedWords = 0;
 
-
-// Results from THIS practice session.
-
 let sessionResults = [];
+
+
+// Keeps track of currently playing word audio
+let currentWordAudio = null;
 
 
 // ------------------------------------------------------
@@ -201,38 +211,63 @@ let sessionResults = [];
 // ------------------------------------------------------
 
 const wordDisplay =
-    document.getElementById("wordDisplay");
+    document.getElementById(
+        "wordDisplay"
+    );
+
 
 const message =
-    document.getElementById("message");
+    document.getElementById(
+        "message"
+    );
+
 
 const progress =
-    document.getElementById("progress");
+    document.getElementById(
+        "progress"
+    );
+
 
 const letterInput =
-    document.getElementById("letterInput");
+    document.getElementById(
+        "letterInput"
+    );
+
 
 const resultsList =
-    document.getElementById("resultsList");
+    document.getElementById(
+        "resultsList"
+    );
+
 
 const score =
-    document.getElementById("score");
+    document.getElementById(
+        "score"
+    );
+
 
 const practiceCard =
-    document.getElementById("practiceCard");
+    document.getElementById(
+        "practiceCard"
+    );
+
 
 const speakButton =
-    document.getElementById("speakButton");
+    document.getElementById(
+        "speakButton"
+    );
 
-
-// These won't exist until we update practice.html.
-// That's okay — the code safely ignores them for now.
 
 const profileName =
-    document.getElementById("profileName");
+    document.getElementById(
+        "profileName"
+    );
+
 
 const profileImage =
-    document.getElementById("profileImage");
+    document.getElementById(
+        "profileImage"
+    );
 
 
 // ------------------------------------------------------
@@ -259,7 +294,7 @@ if (profileImage) {
 
 
 // ------------------------------------------------------
-// DISPLAY WORD
+// DISPLAY CURRENT WORD
 // ------------------------------------------------------
 
 function showWord() {
@@ -270,7 +305,9 @@ function showWord() {
 
 
     const word =
-        spellingWords[currentWordIndex];
+        spellingWords[
+            currentWordIndex
+        ];
 
 
     let display = "";
@@ -282,9 +319,7 @@ function showWord() {
         i++
     ) {
 
-        // Spaces appear automatically
-        // so the student doesn't have to type them.
-
+        // Spaces are shown automatically
         if (word[i] === " ") {
 
             display += "   ";
@@ -294,7 +329,9 @@ function showWord() {
         }
 
 
-        if (i < currentLetterIndex) {
+        if (
+            i < currentLetterIndex
+        ) {
 
             display +=
                 word[i].toUpperCase()
@@ -330,45 +367,80 @@ function showWord() {
 
 
 // ------------------------------------------------------
-// SPEAK CURRENT WORD
+// PLAY CURRENT WORD MP3
 // ------------------------------------------------------
 
 function speakWord() {
 
     const word =
-        spellingWords[currentWordIndex];
+        spellingWords[
+            currentWordIndex
+        ];
+
+
+    // Convert:
+    // carbon monoxide
+    // into:
+    // carbon_monoxide.mp3
 
     const filename =
         word
             .toLowerCase()
             .replaceAll(" ", "_")
-            + ".mp3";
+        + ".mp3";
 
-    const audio =
+
+    // Stop any audio already playing
+    if (currentWordAudio) {
+
+        currentWordAudio.pause();
+
+        currentWordAudio.currentTime =
+            0;
+
+    }
+
+
+    currentWordAudio =
         new Audio(
             "sounds/" + filename
         );
 
-    audio.play();
+
+    currentWordAudio
+        .play()
+        .catch(error => {
+
+            console.error(
+                "Audio could not play:",
+                error
+            );
+
+        });
+
 
     if (letterInput) {
+
         letterInput.focus();
+
     }
 
 }
 
+
 // ------------------------------------------------------
-// CHECK LETTER
+// CHECK TYPED LETTER
 // ------------------------------------------------------
 
 function handleLetter(letter) {
 
     const word =
-        spellingWords[currentWordIndex];
+        spellingWords[
+            currentWordIndex
+        ];
 
 
-    // Automatically skip spaces.
-
+    // Automatically skip spaces
     while (
         word[currentLetterIndex]
         === " "
@@ -395,8 +467,7 @@ function handleLetter(letter) {
         currentLetterIndex++;
 
 
-        // Skip space after a correct letter.
-
+        // Skip a space after a correct letter
         while (
             word[currentLetterIndex]
             === " "
@@ -434,6 +505,7 @@ function handleLetter(letter) {
 
         currentWordMissed =
             true;
+
 
         showWrongAnimation();
 
@@ -493,7 +565,9 @@ function showWrongAnimation() {
 
                 practiceCard
                     .classList
-                    .remove("shake");
+                    .remove(
+                        "shake"
+                    );
 
             },
 
@@ -512,10 +586,10 @@ function showWrongAnimation() {
 function finishWord() {
 
     const word =
-        spellingWords[currentWordIndex];
+        spellingWords[
+            currentWordIndex
+        ];
 
-
-    // Add result to sidebar.
 
     addResult(
         word,
@@ -523,15 +597,11 @@ function finishWord() {
     );
 
 
-    // Save permanent history.
-
     recordWordHistory(
         word,
         currentWordMissed
     );
 
-
-    // Save result for this session.
 
     sessionResults.push({
 
@@ -556,6 +626,9 @@ function finishWord() {
         missedWords++;
 
 
+        updateScore();
+
+
         if (message) {
 
             message.textContent =
@@ -569,7 +642,9 @@ function finishWord() {
 
         correctWords++;
 
+
         updateScore();
+
 
         showCelebration();
 
@@ -585,7 +660,7 @@ function finishWord() {
 
 
 // ------------------------------------------------------
-// RECORD PERMANENT WORD HISTORY
+// RECORD WORD HISTORY
 // ------------------------------------------------------
 
 function recordWordHistory(
@@ -594,44 +669,50 @@ function recordWordHistory(
 ) {
 
     const profileHistory =
-        history[selectedProfileId];
+        history[
+            selectedProfileId
+        ];
 
 
-    profileHistory.wordsPracticed++;
+    profileHistory
+        .wordsPracticed++;
 
 
     if (
-        !profileHistory.wordStats[word]
+        !profileHistory
+            .wordStats[word]
     ) {
 
-        profileHistory.wordStats[word] = {
+        profileHistory
+            .wordStats[word] = {
 
-            attempts: 0,
-            perfect: 0,
-            missed: 0,
+                attempts: 0,
+                perfect: 0,
+                missed: 0,
+                lastPracticed: null
 
-            lastPracticed:
-                null
-
-        };
+            };
 
     }
 
 
     const stats =
-        profileHistory.wordStats[word];
+        profileHistory
+            .wordStats[word];
 
 
     stats.attempts++;
 
 
     stats.lastPracticed =
-        new Date().toISOString();
+        new Date()
+            .toISOString();
 
 
     if (missed) {
 
         stats.missed++;
+
 
         profileHistory
             .missedWords++;
@@ -641,6 +722,7 @@ function recordWordHistory(
     else {
 
         stats.perfect++;
+
 
         profileHistory
             .perfectWords++;
@@ -702,7 +784,9 @@ function showCelebration() {
 
             practiceCard
                 .classList
-                .remove("success");
+                .remove(
+                    "success"
+                );
 
         },
 
@@ -764,14 +848,18 @@ function showCelebration() {
             "50px";
 
 
-        practiceCard.appendChild(
-            emoji
-        );
+        practiceCard
+            .appendChild(
+                emoji
+            );
 
 
         setTimeout(
-            () =>
-                emoji.remove(),
+            () => {
+
+                emoji.remove();
+
+            },
 
             1300
         );
@@ -782,7 +870,7 @@ function showCelebration() {
 
 
 // ------------------------------------------------------
-// ADD RESULT TO TODAY'S SIDEBAR
+// ADD RESULT TO SIDEBAR
 // ------------------------------------------------------
 
 function addResult(
@@ -806,6 +894,7 @@ function addResult(
         item.textContent =
             "❌ " + word;
 
+
         item.className =
             "missed";
 
@@ -816,15 +905,17 @@ function addResult(
         item.textContent =
             "✅ " + word;
 
+
         item.className =
             "correct";
 
     }
 
 
-    resultsList.appendChild(
-        item
-    );
+    resultsList
+        .appendChild(
+            item
+        );
 
 }
 
@@ -898,9 +989,8 @@ function nextWord() {
     showWord();
 
 
-    // Automatically says every word
-    // after the first one.
-
+    // Automatically plays each word
+    // after the first word
     speakWord();
 
 
@@ -914,7 +1004,7 @@ function nextWord() {
 
 
 // ------------------------------------------------------
-// FINISH ENTIRE PRACTICE SESSION
+// FINISH ENTIRE SESSION
 // ------------------------------------------------------
 
 function finishPractice() {
@@ -973,19 +1063,22 @@ function finishPractice() {
 
 
 // ------------------------------------------------------
-// SAVE SESSION HISTORY
+// SAVE COMPLETED SESSION
 // ------------------------------------------------------
 
 function saveSessionHistory() {
 
     const profileHistory =
-        history[selectedProfileId];
+        history[
+            selectedProfileId
+        ];
 
 
     const session = {
 
         date:
-            new Date().toISOString(),
+            new Date()
+                .toISOString(),
 
         totalWords:
             spellingWords.length,
@@ -1002,23 +1095,28 @@ function saveSessionHistory() {
     };
 
 
-    profileHistory.sessions.unshift(
-        session
-    );
+    profileHistory
+        .sessions
+        .unshift(
+            session
+        );
 
 
-    // Keep the latest 100 sessions.
-
+    // Keep latest 100 sessions
     if (
-        profileHistory.sessions.length
-        > 100
+        profileHistory
+            .sessions
+            .length > 100
     ) {
 
         profileHistory.sessions =
-            profileHistory.sessions.slice(
-                0,
-                100
-            );
+
+            profileHistory
+                .sessions
+                .slice(
+                    0,
+                    100
+                );
 
     }
 
@@ -1062,7 +1160,8 @@ if (letterInput) {
             }
 
 
-            // Clear input after each key.
+            // Clear the typing box
+            // after every keypress
 
             letterInput.value =
                 "";
