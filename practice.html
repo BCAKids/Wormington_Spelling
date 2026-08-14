@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Wormington Spelling</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -14,7 +18,7 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f4f7fb;
+            background: #f3f6fb;
             color: #222;
         }
 
@@ -23,98 +27,121 @@
             min-height: 100vh;
         }
 
-        /* LEFT SIDE - PRACTICE */
 
-        .practiceArea {
+        /* MAIN PRACTICE AREA */
+
+        .practice-area {
             flex: 1;
+            padding: 35px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .practice-card {
+            width: 100%;
+            max-width: 750px;
             text-align: center;
-            padding: 35px 20px;
+            background: white;
+            border-radius: 24px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.08);
+            position: relative;
+            overflow: hidden;
         }
 
         h1 {
+            margin-top: 0;
             margin-bottom: 5px;
         }
 
-        #weekTitle {
-            color: #666;
-            margin-top: 0;
-        }
-
-        #wordDisplay {
-            font-size: 44px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            margin: 45px 0 25px;
-            min-height: 60px;
+        .score {
+            color: #777;
+            font-size: 18px;
+            margin-bottom: 30px;
         }
 
         #speakButton {
+            border: none;
             background: #4285f4;
             color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            padding: 14px 25px;
+            font-size: 21px;
+            font-weight: bold;
+            padding: 15px 26px;
+            border-radius: 14px;
             cursor: pointer;
         }
 
-        #hiddenInput {
+
+        /* SPELLING LETTERS */
+
+        #wordDisplay {
+            font-size: 46px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin: 45px 0 28px;
+            min-height: 65px;
+            word-wrap: break-word;
+        }
+
+
+        /* INPUT */
+
+        #letterInput {
             width: 300px;
             max-width: 90%;
             padding: 15px;
             font-size: 24px;
             text-align: center;
-            border: 2px solid #aaa;
-            border-radius: 10px;
+            border: 3px solid #d0d5dd;
+            border-radius: 14px;
             outline: none;
         }
 
-        #hiddenInput:focus {
+        #letterInput:focus {
             border-color: #4285f4;
         }
 
+
+        /* MESSAGES */
+
         #message {
-            font-size: 26px;
+            font-size: 30px;
             font-weight: bold;
-            min-height: 40px;
+            min-height: 50px;
             margin-top: 20px;
         }
 
         #progress {
+            color: #777;
             font-size: 18px;
-            color: #666;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
-        .backLink {
-            display: inline-block;
-            margin-top: 40px;
-        }
 
-        /* RIGHT SIDE - RESULTS */
+        /* SIDEBAR */
 
-        .resultsPanel {
-            width: 260px;
+        .results-panel {
+            width: 280px;
             background: white;
             border-left: 1px solid #ddd;
             padding: 25px;
+            overflow-y: auto;
         }
 
-        .resultsPanel h2 {
-            margin-top: 0;
+        .results-panel h2 {
             text-align: center;
+            margin-top: 0;
         }
 
         #resultsList {
             list-style: none;
             padding: 0;
-            margin: 0;
         }
 
         #resultsList li {
-            padding: 10px 5px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         .correct {
@@ -125,78 +152,171 @@
             color: #d93025;
         }
 
-        /* PHONE / SMALL SCREEN */
 
-        @media (max-width: 700px) {
+        /* ANIMATIONS */
+
+        .shake {
+            animation: shake .35s;
+        }
+
+        @keyframes shake {
+
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-12px); }
+            40% { transform: translateX(12px); }
+            60% { transform: translateX(-8px); }
+            80% { transform: translateX(8px); }
+            100% { transform: translateX(0); }
+
+        }
+
+        .success {
+            animation: successPop .55s;
+        }
+
+        @keyframes successPop {
+
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+
+        }
+
+
+        /* CELEBRATION EMOJI */
+
+        .celebration {
+            position: absolute;
+            font-size: 45px;
+            pointer-events: none;
+            animation: fly 1.2s forwards;
+        }
+
+        @keyframes fly {
+
+            0% {
+                transform: translateY(0) scale(.5) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-250px) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+
+        }
+
+
+        /* PHONE */
+
+        @media (max-width: 750px) {
 
             .page {
                 display: block;
             }
 
-            .resultsPanel {
+            .practice-area {
+                padding: 15px;
+            }
+
+            .practice-card {
+                padding: 25px 15px;
+            }
+
+            .results-panel {
                 width: 100%;
                 border-left: none;
                 border-top: 1px solid #ddd;
-                margin-top: 20px;
+            }
+
+            #wordDisplay {
+                font-size: 34px;
+                letter-spacing: 5px;
             }
 
         }
+
     </style>
 </head>
+
 
 <body>
 
 <div class="page">
 
-    <main class="practiceArea">
 
-        <h1>Wormington Spelling</h1>
+    <main class="practice-area">
 
-        <h2 id="weekTitle"></h2>
+        <div
+            class="practice-card"
+            id="practiceCard">
 
-        <button
-            id="speakButton"
-            type="button"
-            onclick="speakWord()">
 
-            🔊 Say Word
+            <h1>Wormington Spelling</h1>
 
-        </button>
 
-        <div id="wordDisplay"></div>
+            <div
+                class="score"
+                id="score">
+                Correct: 0
+            </div>
 
-        <input
-            id="hiddenInput"
-            type="text"
-            placeholder="Type a letter..."
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-        >
 
-        <div id="message"></div>
+            <button
+                id="speakButton"
+                onclick="speakWord()">
 
-        <div id="progress"></div>
+                🔊 Hear Word
 
-        <a class="backLink" href="index.html">
-            ← Choose Another Week
-        </a>
+            </button>
+
+
+            <div id="wordDisplay"></div>
+
+
+            <input
+                id="letterInput"
+                type="text"
+                placeholder="Type a letter..."
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false">
+
+
+            <div id="message"></div>
+
+
+            <div id="progress"></div>
+
+
+        </div>
 
     </main>
 
 
-    <aside class="resultsPanel">
 
-        <h2>Progress</h2>
+    <aside class="results-panel">
+
+        <h2>Today's Words</h2>
 
         <ul id="resultsList"></ul>
 
     </aside>
 
+
 </div>
 
-<script src="app.js?v=3"></script>
+
+<script src="app.js?v=4"></script>
 
 </body>
 </html>
