@@ -5,7 +5,8 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Wormington Spelling</title>
 
@@ -28,37 +29,94 @@
         }
 
 
-        /* MAIN PRACTICE AREA */
+        /* MAIN AREA */
 
         .practice-area {
             flex: 1;
-            padding: 35px;
+            padding: 25px;
             display: flex;
             justify-content: center;
         }
 
         .practice-card {
             width: 100%;
-            max-width: 750px;
-            text-align: center;
+            max-width: 800px;
             background: white;
             border-radius: 24px;
-            padding: 35px 30px;
+            padding: 28px 30px 35px;
+            text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,.08);
             position: relative;
             overflow: hidden;
         }
 
-        h1 {
-            margin-top: 0;
-            margin-bottom: 5px;
+
+        /* PROFILE BAR */
+
+        .profile-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
-        .score {
-            color: #777;
-            font-size: 18px;
-            margin-bottom: 30px;
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-align: left;
         }
+
+        #profileImage {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+        }
+
+        #profileName {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .profile-subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+
+        .history-button {
+            text-decoration: none;
+            background: #f0f3f8;
+            color: #333;
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .history-button:hover {
+            background: #e2e7ef;
+        }
+
+
+        /* TITLE */
+
+        h1 {
+            margin: 10px 0 5px;
+            font-size: 32px;
+        }
+
+
+        /* SCORE */
+
+        #score {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+
+        /* SPEAK BUTTON */
 
         #speakButton {
             border: none;
@@ -66,19 +124,23 @@
             color: white;
             font-size: 21px;
             font-weight: bold;
-            padding: 15px 26px;
+            padding: 15px 28px;
             border-radius: 14px;
             cursor: pointer;
         }
 
+        #speakButton:active {
+            transform: scale(.97);
+        }
 
-        /* SPELLING LETTERS */
+
+        /* WORD DISPLAY */
 
         #wordDisplay {
             font-size: 46px;
             font-weight: bold;
             letter-spacing: 8px;
-            margin: 45px 0 28px;
+            margin: 42px 0 25px;
             min-height: 65px;
             word-wrap: break-word;
         }
@@ -87,7 +149,7 @@
         /* INPUT */
 
         #letterInput {
-            width: 300px;
+            width: 320px;
             max-width: 90%;
             padding: 15px;
             font-size: 24px;
@@ -102,26 +164,42 @@
         }
 
 
-        /* MESSAGES */
+        /* MESSAGE */
 
         #message {
             font-size: 30px;
             font-weight: bold;
             min-height: 50px;
-            margin-top: 20px;
+            margin-top: 18px;
         }
+
+
+        /* PROGRESS */
 
         #progress {
             color: #777;
             font-size: 18px;
-            margin-top: 15px;
+            margin-top: 12px;
+        }
+
+
+        /* BOTTOM LINKS */
+
+        .bottom-links {
+            margin-top: 30px;
+        }
+
+        .bottom-links a {
+            color: #4285f4;
+            font-weight: bold;
+            text-decoration: none;
         }
 
 
         /* SIDEBAR */
 
         .results-panel {
-            width: 280px;
+            width: 290px;
             background: white;
             border-left: 1px solid #ddd;
             padding: 25px;
@@ -129,17 +207,26 @@
         }
 
         .results-panel h2 {
-            text-align: center;
             margin-top: 0;
+            text-align: center;
+        }
+
+        .sidebar-subtitle {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            margin-top: -8px;
+            margin-bottom: 18px;
         }
 
         #resultsList {
             list-style: none;
             padding: 0;
+            margin: 0;
         }
 
         #resultsList li {
-            padding: 10px;
+            padding: 10px 5px;
             border-bottom: 1px solid #eee;
             font-size: 18px;
         }
@@ -153,7 +240,7 @@
         }
 
 
-        /* ANIMATIONS */
+        /* WRONG ANIMATION */
 
         .shake {
             animation: shake .35s;
@@ -161,14 +248,34 @@
 
         @keyframes shake {
 
-            0% { transform: translateX(0); }
-            20% { transform: translateX(-12px); }
-            40% { transform: translateX(12px); }
-            60% { transform: translateX(-8px); }
-            80% { transform: translateX(8px); }
-            100% { transform: translateX(0); }
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-12px);
+            }
+
+            40% {
+                transform: translateX(12px);
+            }
+
+            60% {
+                transform: translateX(-8px);
+            }
+
+            80% {
+                transform: translateX(8px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
 
         }
+
+
+        /* SUCCESS ANIMATION */
 
         .success {
             animation: successPop .55s;
@@ -181,7 +288,7 @@
             }
 
             50% {
-                transform: scale(1.08);
+                transform: scale(1.06);
             }
 
             100% {
@@ -203,32 +310,40 @@
         @keyframes fly {
 
             0% {
-                transform: translateY(0) scale(.5) rotate(0deg);
+                transform:
+                    translateY(0)
+                    scale(.5)
+                    rotate(0deg);
+
                 opacity: 1;
             }
 
             100% {
-                transform: translateY(-250px) scale(1.5) rotate(360deg);
+                transform:
+                    translateY(-250px)
+                    scale(1.5)
+                    rotate(360deg);
+
                 opacity: 0;
             }
 
         }
 
 
-        /* PHONE */
+        /* MOBILE */
 
-        @media (max-width: 750px) {
+        @media (max-width: 800px) {
 
             .page {
                 display: block;
             }
 
             .practice-area {
-                padding: 15px;
+                padding: 12px;
             }
 
             .practice-card {
-                padding: 25px 15px;
+                padding: 20px 15px 28px;
             }
 
             .results-panel {
@@ -242,11 +357,23 @@
                 letter-spacing: 5px;
             }
 
+            .profile-bar {
+                align-items: flex-start;
+            }
+
+            #profileImage {
+                width: 58px;
+                height: 58px;
+            }
+
+            #profileName {
+                font-size: 19px;
+            }
+
         }
 
     </style>
 </head>
-
 
 <body>
 
@@ -257,30 +384,78 @@
 
         <div
             class="practice-card"
-            id="practiceCard">
+            id="practiceCard"
+        >
 
 
-            <h1>Wormington Spelling</h1>
+            <!-- PROFILE -->
+
+            <div class="profile-bar">
+
+                <div class="profile-info">
+
+                    <img
+                        id="profileImage"
+                        src=""
+                        alt="Profile"
+                    >
+
+                    <div>
+
+                        <div id="profileName">
+                            Profile
+                        </div>
+
+                        <div class="profile-subtitle">
+                            Current player
+                        </div>
+
+                    </div>
+
+                </div>
 
 
-            <div
-                class="score"
-                id="score">
-                Correct: 0
+                <a
+                    class="history-button"
+                    href="history.html"
+                >
+                    History
+                </a>
+
             </div>
 
 
+            <!-- TITLE -->
+
+            <h1>
+                Wormington Spelling
+            </h1>
+
+
+            <!-- SCORE -->
+
+            <div id="score">
+                Perfect: 0 | Missed: 0
+            </div>
+
+
+            <!-- SPEAK WORD -->
+
             <button
                 id="speakButton"
-                onclick="speakWord()">
-
+                type="button"
+                onclick="speakWord()"
+            >
                 🔊 Hear Word
-
             </button>
 
 
+            <!-- SPELLING DISPLAY -->
+
             <div id="wordDisplay"></div>
 
+
+            <!-- INPUT -->
 
             <input
                 id="letterInput"
@@ -289,13 +464,29 @@
                 autocomplete="off"
                 autocorrect="off"
                 autocapitalize="off"
-                spellcheck="false">
+                spellcheck="false"
+            >
 
+
+            <!-- RESULT MESSAGE -->
 
             <div id="message"></div>
 
 
+            <!-- WORD PROGRESS -->
+
             <div id="progress"></div>
+
+
+            <!-- BOTTOM -->
+
+            <div class="bottom-links">
+
+                <a href="index.html">
+                    ← Change Profile
+                </a>
+
+            </div>
 
 
         </div>
@@ -304,9 +495,17 @@
 
 
 
+    <!-- SESSION SIDEBAR -->
+
     <aside class="results-panel">
 
-        <h2>Today's Words</h2>
+        <h2>
+            Today's Words
+        </h2>
+
+        <div class="sidebar-subtitle">
+            This practice session
+        </div>
 
         <ul id="resultsList"></ul>
 
@@ -316,7 +515,7 @@
 </div>
 
 
-<script src="app.js?v=4"></script>
+<script src="app.js?v=6"></script>
 
 </body>
 </html>
