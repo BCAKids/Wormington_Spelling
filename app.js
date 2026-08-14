@@ -338,41 +338,24 @@ function speakWord() {
     const word =
         spellingWords[currentWordIndex];
 
+    const filename =
+        word
+            .toLowerCase()
+            .replaceAll(" ", "_")
+            + ".mp3";
 
-    const speech =
-        new SpeechSynthesisUtterance(
-            word
+    const audio =
+        new Audio(
+            "sounds/" + filename
         );
 
-
-    speech.lang =
-        "en-US";
-
-    speech.rate =
-        0.72;
-
-    speech.pitch =
-        1;
-
-    speech.volume =
-        1;
-
-
-    speechSynthesis.cancel();
-
-    speechSynthesis.speak(
-        speech
-    );
-
+    audio.play();
 
     if (letterInput) {
-
         letterInput.focus();
-
     }
 
 }
-
 
 // ------------------------------------------------------
 // CHECK LETTER
