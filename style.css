@@ -208,6 +208,45 @@ a {
 }
 
 
+/* CLEAR PROFILE */
+
+.clear-button {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding:
+        10px 12px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #fff1f1;
+
+    color: #b3261e;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        background .15s,
+        transform .15s;
+}
+
+.clear-button:hover {
+    background: #ffe1e1;
+}
+
+.clear-button:active {
+    transform:
+        scale(.97);
+}
+
+
 /* START PRACTICE */
 
 .start-area {
@@ -373,9 +412,17 @@ a {
 }
 
 
-/* PRACTICE HISTORY BUTTON */
+/* PRACTICE TOP BUTTONS */
 
-.profile-bar
+.profile-actions {
+    display: flex;
+
+    gap: 8px;
+
+    align-items: center;
+}
+
+.profile-actions
 .history-button {
     width: auto;
 
@@ -791,7 +838,7 @@ a {
 }
 
 
-/* HISTORY SUMMARY CARDS */
+/* HISTORY SUMMARY */
 
 .summary-grid {
     display: grid;
@@ -948,8 +995,6 @@ th {
     }
 
 
-    /* PRACTICE */
-
     .page {
         display: block;
     }
@@ -993,8 +1038,13 @@ th {
         font-size: 19px;
     }
 
+    .profile-actions {
+        flex-wrap: wrap;
 
-    /* HISTORY */
+        justify-content:
+            flex-end;
+    }
+
 
     .summary-grid {
         grid-template-columns:
