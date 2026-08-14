@@ -202,8 +202,23 @@ let missedWords = 0;
 let sessionResults = [];
 
 
-// Keeps track of currently playing word audio
+// ------------------------------------------------------
+// AUDIO
+// ------------------------------------------------------
+
 let currentWordAudio = null;
+
+
+const correctSound =
+    new Audio(
+        "sounds/correct.mp3"
+    );
+
+
+const wrongSound =
+    new Audio(
+        "sounds/wrong.mp3"
+    );
 
 
 // ------------------------------------------------------
@@ -319,7 +334,6 @@ function showWord() {
         i++
     ) {
 
-        // Spaces are shown automatically
         if (word[i] === " ") {
 
             display += "   ";
@@ -378,11 +392,6 @@ function speakWord() {
         ];
 
 
-    // Convert:
-    // carbon monoxide
-    // into:
-    // carbon_monoxide.mp3
-
     const filename =
         word
             .toLowerCase()
@@ -390,7 +399,6 @@ function speakWord() {
         + ".mp3";
 
 
-    // Stop any audio already playing
     if (currentWordAudio) {
 
         currentWordAudio.pause();
@@ -412,7 +420,7 @@ function speakWord() {
         .catch(error => {
 
             console.error(
-                "Audio could not play:",
+                "Word audio could not play:",
                 error
             );
 
@@ -467,7 +475,7 @@ function handleLetter(letter) {
         currentLetterIndex++;
 
 
-        // Skip a space after a correct letter
+        // Automatically skip spaces
         while (
             word[currentLetterIndex]
             === " "
@@ -515,10 +523,27 @@ function handleLetter(letter) {
 
 
 // ------------------------------------------------------
-// WRONG LETTER ANIMATION
+// WRONG LETTER
 // ------------------------------------------------------
 
 function showWrongAnimation() {
+
+    // Play wrong sound
+    wrongSound.currentTime =
+        0;
+
+
+    wrongSound
+        .play()
+        .catch(error => {
+
+            console.error(
+                "Wrong sound could not play:",
+                error
+            );
+
+        });
+
 
     const funnyMessages = [
 
@@ -736,10 +761,27 @@ function recordWordHistory(
 
 
 // ------------------------------------------------------
-// PERFECT WORD ANIMATION
+// PERFECT WORD CELEBRATION
 // ------------------------------------------------------
 
 function showCelebration() {
+
+    // Play correct sound
+    correctSound.currentTime =
+        0;
+
+
+    correctSound
+        .play()
+        .catch(error => {
+
+            console.error(
+                "Correct sound could not play:",
+                error
+            );
+
+        });
+
 
     const messages = [
 
@@ -989,8 +1031,7 @@ function nextWord() {
     showWord();
 
 
-    // Automatically plays each word
-    // after the first word
+    // Automatically play the next word
     speakWord();
 
 
@@ -1004,7 +1045,7 @@ function nextWord() {
 
 
 // ------------------------------------------------------
-// FINISH ENTIRE SESSION
+// FINISH PRACTICE SESSION
 // ------------------------------------------------------
 
 function finishPractice() {
@@ -1102,7 +1143,7 @@ function saveSessionHistory() {
         );
 
 
-    // Keep latest 100 sessions
+    // Keep most recent 100 sessions
     if (
         profileHistory
             .sessions
@@ -1160,9 +1201,7 @@ if (letterInput) {
             }
 
 
-            // Clear the typing box
-            // after every keypress
-
+            // Clear input after every keypress
             letterInput.value =
                 "";
 
@@ -1174,7 +1213,7 @@ if (letterInput) {
 
 
 // ------------------------------------------------------
-// START PAGE
+// START
 // ------------------------------------------------------
 
 showWord();
