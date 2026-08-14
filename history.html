@@ -1,1 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <title>Spelling History</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #222;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px 50px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .back-button {
+            text-decoration: none;
+            color: #4285f4;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 20px 25px;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,.08);
+            margin-bottom: 25px;
+        }
+
+        .profile-header img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+        }
+
+        .profile-header h1 {
+            margin: 0 0 5px;
+            font-size: 34px;
+        }
+
+        .profile-header p {
+            margin: 0;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .summary-card {
+            background: white;
+            padding: 20px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0,0,0,.06);
+        }
+
+        .summary-number {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            color: #777;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 20px rgba(0,0,0,.06);
+        }
+
+        .panel h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            color: #666;
+        }
+
+        .bad {
+            color: #d93025;
+            font-weight: bold;
+        }
+
+        .good {
+            color: #188038;
+            font-weight: bold;
+        }
+
+        .session {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .session:last-child {
+            border-bottom: none;
+        }
+
+        .session-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .session-details {
+            color: #666;
+        }
+
+        .empty {
+            color: #777;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 750px) {
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .profile-header {
+                display: block;
+                text-align: center;
+            }
+
+            .profile-header img {
+                margin-bottom: 10px;
+            }
+
+            table {
+                font-size: 14px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="topbar">
+
+        <a
+            class="back-button"
+            href="index.html">
+            ← Back
+        </a>
+
+    </div>
+
+
+    <div class="profile-header">
+
+        <img
+            id="profileImage"
+            src=""
+            alt="Profile">
+
+        <div>
+
+            <h1 id="profileName">
+                Profile History
+            </h1>
+
+            <p>
+                Spelling progress
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <div
+                class="summary-number"
+                id="sessions">
+                0
+            </div>
+
+            <div class="summary-label">
+                Sessions
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div
+                class="summary-number"
+                id="wordsPracticed">
+                0
+            </div>
+
+            <div class="summary-label">
+                Words Practiced
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div
+                class="summary-number"
+                id="perfectWords">
+                0
+            </div>
+
+            <div class="summary-label">
+                Perfect
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div
+                class="summary-number"
+                id="missedWords">
+                0
+            </div>
+
+            <div class="summary-label">
+                Missed
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Trouble Words</h2>
+
+        <div id="troubleWords"></div>
+
+    </div>
+
+
+    <div class="panel">
+
+        <h2>Recent Sessions</h2>
+
+        <div id="recentSessions"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+const profiles = {
+
+    raccoon: {
+        name: "Raccoon",
+        image: "images/raccoon.png"
+    },
+
+    potato: {
+        name: "Potato",
+        image: "images/potato.png"
+    },
+
+    bird: {
+        name: "Bird",
+        image: "images/bird.png"
+    }
+
+};
+
+
+const HISTORY_KEY =
+    "wormingtonSpellingHistory";
+
+
+const selectedProfileId =
+    localStorage.getItem(
+        "wormingtonSelectedProfile"
+    ) || "raccoon";
+
+
+const selectedProfile =
+    profiles[selectedProfileId];
+
+
+document.getElementById(
+    "profileName"
+).textContent =
+    selectedProfile.name;
+
+
+document.getElementById(
+    "profileImage"
+).src =
+    selectedProfile.image;
+
+
+
+function loadHistory() {
+
+    const saved =
+        localStorage.getItem(
+            HISTORY_KEY
+        );
+
+
+    if (!saved) {
+
+        return null;
+
+    }
+
+
+    try {
+
+        return JSON.parse(saved);
+
+    }
+
+    catch {
+
+        return null;
+
+    }
+
+}
+
+
+const history =
+    loadHistory();
+
+
+const profileHistory =
+    history
+        ? history[selectedProfileId]
+        : null;
+
+
+
+if (!profileHistory) {
+
+    document.getElementById(
+        "troubleWords"
+    ).innerHTML =
+
+        '<div class="empty">' +
+        'No history yet.' +
+        '</div>';
+
+
+    document.getElementById(
+        "recentSessions"
+    ).innerHTML =
+
+        '<div class="empty">' +
+        'Complete a practice session first.' +
+        '</div>';
+
+}
+
+else {
+
+    document.getElementById(
+        "sessions"
+    ).textContent =
+        profileHistory.sessions.length;
+
+
+    document.getElementById(
+        "wordsPracticed"
+    ).textContent =
+        profileHistory.wordsPracticed;
+
+
+    document.getElementById(
+        "perfectWords"
+    ).textContent =
+        profileHistory.perfectWords;
+
+
+    document.getElementById(
+        "missedWords"
+    ).textContent =
+        profileHistory.missedWords;
+
+
+    showTroubleWords();
+
+    showRecentSessions();
+
+}
+
+
+
+// ------------------------------------
+// TROUBLE WORDS
+// ------------------------------------
+
+function showTroubleWords() {
+
+    const container =
+        document.getElementById(
+            "troubleWords"
+        );
+
+
+    const stats =
+        profileHistory.wordStats;
+
+
+    const words =
+        Object.entries(stats);
+
+
+    if (
+        words.length === 0
+    ) {
+
+        container.innerHTML =
+
+            '<div class="empty">' +
+            'No words practiced yet.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    words.sort(
+        (a, b) => {
+
+            const aStats = a[1];
+            const bStats = b[1];
+
+            const aRate =
+                aStats.missed
+                /
+                aStats.attempts;
+
+            const bRate =
+                bStats.missed
+                /
+                bStats.attempts;
+
+            return bRate - aRate;
+
+        }
+    );
+
+
+    let html =
+
+        "<table>" +
+
+        "<thead>" +
+
+        "<tr>" +
+
+        "<th>Word</th>" +
+        "<th>Attempts</th>" +
+        "<th>Perfect</th>" +
+        "<th>Missed</th>" +
+        "<th>Success</th>" +
+
+        "</tr>" +
+
+        "</thead>" +
+
+        "<tbody>";
+
+
+    for (
+        const [word, data]
+        of words
+    ) {
+
+        const successRate =
+
+            Math.round(
+                (
+                    data.perfect
+                    /
+                    data.attempts
+                )
+                *
+                100
+            );
+
+
+        let rateClass =
+            "good";
+
+
+        if (
+            successRate < 70
+        ) {
+
+            rateClass =
+                "bad";
+
+        }
+
+
+        html +=
+
+            "<tr>" +
+
+            "<td>"
+            + word +
+            "</td>" +
+
+            "<td>"
+            + data.attempts +
+            "</td>" +
+
+            "<td>"
+            + data.perfect +
+            "</td>" +
+
+            "<td>"
+            + data.missed +
+            "</td>" +
+
+            '<td class="'
+            + rateClass +
+            '">' +
+
+            successRate +
+            "%" +
+
+            "</td>" +
+
+            "</tr>";
+
+    }
+
+
+    html +=
+
+        "</tbody>" +
+        "</table>";
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+
+// ------------------------------------
+// RECENT SESSIONS
+// ------------------------------------
+
+function showRecentSessions() {
+
+    const container =
+        document.getElementById(
+            "recentSessions"
+        );
+
+
+    const sessions =
+        profileHistory.sessions;
+
+
+    if (
+        sessions.length === 0
+    ) {
+
+        container.innerHTML =
+
+            '<div class="empty">' +
+            'No completed sessions yet.' +
+            '</div>';
+
+        return;
+
+    }
+
+
+    let html =
+        "";
+
+
+    const recent =
+        sessions.slice(
+            0,
+            10
+        );
+
+
+    for (
+        const session
+        of recent
+    ) {
+
+        const date =
+            new Date(
+                session.date
+            );
+
+
+        const readableDate =
+            date.toLocaleString();
+
+
+        html +=
+
+            '<div class="session">' +
+
+            '<div class="session-title">' +
+
+            readableDate +
+
+            "</div>" +
+
+            '<div class="session-details">' +
+
+            session.perfect +
+            " perfect · " +
+
+            session.missed +
+            " missed · " +
+
+            session.totalWords +
+            " words" +
+
+            "</div>" +
+
+            "</div>";
+
+    }
+
+
+    container.innerHTML =
+        html;
+
+}
+
+</script>
+
+</body>
+</html>
