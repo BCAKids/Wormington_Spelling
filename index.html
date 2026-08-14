@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -9,182 +11,24 @@
 
     <title>Wormington Spelling</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(
-                135deg,
-                #eef4ff,
-                #f8f5ff
-            );
-            color: #222;
-        }
-
-        .container {
-            max-width: 1050px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 42px;
-        }
-
-        .header p {
-            margin-top: 10px;
-            color: #666;
-            font-size: 21px;
-        }
-
-        .profiles {
-            display: grid;
-            grid-template-columns:
-                repeat(3, minmax(0, 1fr));
-            gap: 22px;
-        }
-
-        .profile-card {
-            background: white;
-            border: 4px solid transparent;
-            border-radius: 24px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(0,0,0,.08);
-            cursor: pointer;
-            transition:
-                transform .18s,
-                border-color .18s,
-                box-shadow .18s;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0,0,0,.12);
-        }
-
-        .profile-card.selected {
-            border-color: #4285f4;
-            transform: translateY(-4px);
-            box-shadow:
-                0 0 0 4px rgba(66,133,244,.12),
-                0 12px 30px rgba(0,0,0,.12);
-        }
-
-        .profile-image {
-            width: 180px;
-            height: 180px;
-            max-width: 100%;
-            object-fit: contain;
-            margin-bottom: 10px;
-        }
-
-        .profile-name {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 12px;
-        }
-
-        .history-summary {
-            min-height: 72px;
-            color: #666;
-            line-height: 1.6;
-            font-size: 16px;
-            margin-bottom: 16px;
-        }
-
-        .history-button {
-            display: inline-block;
-            width: 100%;
-            text-decoration: none;
-            background: #f0f3f8;
-            color: #333;
-            border-radius: 12px;
-            padding: 11px 12px;
-            font-weight: bold;
-            transition: background .15s;
-        }
-
-        .history-button:hover {
-            background: #e2e7ef;
-        }
-
-        .start-area {
-            max-width: 500px;
-            margin: 35px auto 0;
-            text-align: center;
-        }
-
-        .selected-label {
-            color: #666;
-            min-height: 28px;
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-
-        #startButton {
-            width: 100%;
-            padding: 18px;
-            border: none;
-            border-radius: 15px;
-            background: #4285f4;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            transition:
-                transform .15s,
-                opacity .15s;
-        }
-
-        #startButton:active {
-            transform: scale(.97);
-        }
-
-        #startButton:disabled {
-            opacity: .45;
-            cursor: not-allowed;
-        }
-
-        @media (max-width: 800px) {
-
-            .profiles {
-                grid-template-columns: 1fr;
-                max-width: 480px;
-                margin: 0 auto;
-            }
-
-            .profile-image {
-                width: 160px;
-                height: 160px;
-            }
-
-            .header h1 {
-                font-size: 34px;
-            }
-
-        }
-    </style>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
-<body>
+
+<body class="home-page">
+
 
 <div class="container">
 
+
     <div class="header">
 
-        <h1>Wormington Spelling</h1>
+        <h1>
+            Wormington Spelling
+        </h1>
 
         <p>
             Choose your profile
@@ -194,6 +38,7 @@
 
 
     <div class="profiles">
+
 
         <!-- RACCOON -->
 
@@ -215,7 +60,8 @@
 
             <div
                 class="history-summary"
-                id="raccoonSummary">
+                id="raccoonSummary"
+            >
             </div>
 
             <a
@@ -249,7 +95,8 @@
 
             <div
                 class="history-summary"
-                id="potatoSummary">
+                id="potatoSummary"
+            >
             </div>
 
             <a
@@ -283,7 +130,8 @@
 
             <div
                 class="history-summary"
-                id="birdSummary">
+                id="birdSummary"
+            >
             </div>
 
             <a
@@ -296,6 +144,7 @@
 
         </div>
 
+
     </div>
 
 
@@ -303,7 +152,8 @@
 
         <div
             class="selected-label"
-            id="selectedLabel">
+            id="selectedLabel"
+        >
             Select a profile to begin.
         </div>
 
@@ -317,6 +167,7 @@
         </button>
 
     </div>
+
 
 </div>
 
@@ -350,10 +201,6 @@ let selectedProfileId =
     );
 
 
-
-// --------------------------------------------------
-// SELECT PROFILE
-// --------------------------------------------------
 
 function selectProfile(profileId) {
 
@@ -414,10 +261,6 @@ function selectProfile(profileId) {
 
 
 
-// --------------------------------------------------
-// START PRACTICE
-// --------------------------------------------------
-
 function startPractice() {
 
     if (!selectedProfileId) {
@@ -438,16 +281,14 @@ function startPractice() {
 
 
 
-// --------------------------------------------------
-// OPEN HISTORY FOR SPECIFIC PROFILE
-// --------------------------------------------------
-
 function openHistory(
     event,
     profileId
 ) {
 
     event.stopPropagation();
+
+    event.preventDefault();
 
 
     localStorage.setItem(
@@ -462,10 +303,6 @@ function openHistory(
 }
 
 
-
-// --------------------------------------------------
-// LOAD HISTORY
-// --------------------------------------------------
 
 function loadHistory() {
 
@@ -499,10 +336,6 @@ function loadHistory() {
 }
 
 
-
-// --------------------------------------------------
-// SHOW SUMMARY BELOW EACH PROFILE
-// --------------------------------------------------
 
 function showProfileSummaries() {
 
@@ -563,8 +396,7 @@ function showProfileSummaries() {
             ) {
 
                 if (
-                    wordData.missed
-                    > 0
+                    wordData.missed > 0
                 ) {
 
                     troubleWords++;
@@ -595,18 +427,12 @@ function showProfileSummaries() {
 
 
 
-// --------------------------------------------------
-// RESTORE LAST SELECTED PROFILE
-// --------------------------------------------------
-
 function restoreSelection() {
 
     if (
         selectedProfileId
         &&
-        profiles[
-            selectedProfileId
-        ]
+        profiles[selectedProfileId]
     ) {
 
         selectProfile(
@@ -619,15 +445,12 @@ function restoreSelection() {
 
 
 
-// --------------------------------------------------
-// PAGE START
-// --------------------------------------------------
-
 showProfileSummaries();
 
 restoreSelection();
 
 </script>
+
 
 </body>
 </html>
