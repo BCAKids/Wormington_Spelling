@@ -1,1 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Vocabulary - Wormington Practice</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- =========================
+         MAIN VOCAB AREA
+         ========================= -->
+
+    <main class="practice-area">
+
+
+        <div
+            class="practice-card"
+            id="vocabCard"
+        >
+
+
+            <!-- TOP BAR -->
+
+            <div class="profile-bar">
+
+
+                <div class="profile-info">
+
+                    <div>
+
+                        <div id="profileName">
+                            📚 Vocabulary
+                        </div>
+
+                        <div class="profile-subtitle">
+                            Match the definition to the correct word.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-actions">
+
+                    <a
+                        class="history-button"
+                        href="index.html"
+                    >
+                        🏠 Home
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <h1>
+                Vocabulary Practice
+            </h1>
+
+
+            <div id="score">
+                Correct: 0 | Missed: 0
+            </div>
+
+
+            <!-- VOCAB LAYOUT -->
+
+            <div class="vocab-layout">
+
+
+                <!-- DEFINITION -->
+
+                <section class="definition-card">
+
+                    <div class="definition-label">
+                        Definition
+                    </div>
+
+                    <div
+                        class="definition-text"
+                        id="definitionText"
+                    >
+                    </div>
+
+
+                    <div
+                        id="message"
+                    >
+                    </div>
+
+
+                    <div
+                        id="progress"
+                    >
+                    </div>
+
+                </section>
+
+
+                <!-- WORD BANK -->
+
+                <aside class="word-bank">
+
+                    <h2>
+                        Word Bank
+                    </h2>
+
+                    <div
+                        id="wordBank"
+                    >
+                    </div>
+
+                </aside>
+
+
+            </div>
+
+
+            <div class="bottom-links">
+
+                <a href="index.html">
+                    ← Back to Activities
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =========================
+         SESSION RESULTS
+         ========================= -->
+
+    <aside class="results-panel">
+
+
+        <h2>
+            Today's Words
+        </h2>
+
+
+        <div class="sidebar-subtitle">
+            This practice session
+        </div>
+
+
+        <ul id="resultsList">
+        </ul>
+
+
+    </aside>
+
+
+</div>
+
+
+<script src="vocab.js?v=1"></script>
+
+
+</body>
+
+</html>
