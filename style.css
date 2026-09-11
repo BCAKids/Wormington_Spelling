@@ -1,12 +1,12 @@
 /* =====================================================
-   WORMINGTON SPELLING
+   WORMINGTON PRACTICE
    Shared Styles
    ===================================================== */
 
 
-/* -----------------------------
+/* =====================================================
    GLOBAL
------------------------------ */
+   ===================================================== */
 
 * {
     box-sizing: border-box;
@@ -19,7 +19,12 @@ html {
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
     background: #f3f6fb;
     color: #222;
 }
@@ -36,7 +41,7 @@ a {
 
 
 /* =====================================================
-   START / PROFILE PAGE
+   HOME PAGE
    ===================================================== */
 
 .home-page {
@@ -51,270 +56,199 @@ a {
 }
 
 .container {
-    max-width: 1050px;
+    max-width: 1100px;
+
     margin: 0 auto;
-    padding: 40px 20px 60px;
+
+    padding:
+        40px 20px 60px;
 }
 
 .header {
     text-align: center;
+
     margin-bottom: 35px;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 42px;
+
+    font-size: 44px;
 }
 
 .header p {
     margin-top: 10px;
+
     color: #666;
+
     font-size: 21px;
 }
 
 
-/* PROFILE GRID */
+/* =====================================================
+   ACTIVITY SELECTION
+   ===================================================== */
 
-.profiles {
+.activity-grid {
     display: grid;
 
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
 
-    gap: 22px;
+    gap: 24px;
+
+    margin-top: 30px;
 }
 
-.profile-card {
-    background: white;
 
-    border:
-        4px solid transparent;
+.activity-card {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-height: 330px;
+
+    padding:
+        30px 24px;
+
+    background: white;
 
     border-radius: 24px;
 
-    padding: 20px;
-
     text-align: center;
+
+    text-decoration: none;
+
+    color: #222;
 
     box-shadow:
         0 8px 25px
         rgba(0,0,0,.08);
 
-    cursor: pointer;
-
     transition:
         transform .18s,
-        border-color .18s,
         box-shadow .18s;
 }
 
-.profile-card:hover {
+
+.activity-card:hover {
     transform:
-        translateY(-4px);
+        translateY(-6px);
 
     box-shadow:
-        0 12px 30px
-        rgba(0,0,0,.12);
-}
-
-.profile-card.selected {
-    border-color: #4285f4;
-
-    transform:
-        translateY(-4px);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(66,133,244,.12),
-
-        0 12px 30px
-        rgba(0,0,0,.12);
+        0 14px 32px
+        rgba(0,0,0,.13);
 }
 
 
-/* PROFILE CHARACTER */
+.activity-icon {
+    font-size: 70px;
 
-.profile-image {
-    width: 180px;
-    height: 180px;
-
-    max-width: 100%;
-
-    object-fit: contain;
-
-    margin-bottom: 8px;
-
-    transition:
-        transform .2s;
+    margin-bottom: 20px;
 }
 
-.profile-card:hover
-.profile-image {
-    transform:
-        scale(1.04);
-}
 
-.profile-name {
-    font-size: 26px;
+.activity-title {
+    font-size: 30px;
+
     font-weight: bold;
 
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
-.history-summary {
-    min-height: 72px;
 
+.activity-description {
     color: #666;
-
-    line-height: 1.6;
-
-    font-size: 16px;
-
-    margin-bottom: 16px;
-}
-
-
-/* HISTORY BUTTON */
-
-.history-button {
-    display: inline-block;
-
-    width: 100%;
-
-    text-decoration: none;
-
-    background: #f0f3f8;
-
-    color: #333;
-
-    border-radius: 12px;
-
-    padding: 11px 12px;
-
-    font-weight: bold;
-
-    transition:
-        background .15s,
-        transform .15s;
-}
-
-.history-button:hover {
-    background: #e2e7ef;
-}
-
-.history-button:active {
-    transform:
-        scale(.97);
-}
-
-
-/* CLEAR PROFILE */
-
-.clear-button {
-    width: 100%;
-
-    margin-top: 8px;
-
-    padding:
-        10px 12px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: #fff1f1;
-
-    color: #b3261e;
-
-    font-size: 15px;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition:
-        background .15s,
-        transform .15s;
-}
-
-.clear-button:hover {
-    background: #ffe1e1;
-}
-
-.clear-button:active {
-    transform:
-        scale(.97);
-}
-
-
-/* START PRACTICE */
-
-.start-area {
-    max-width: 500px;
-
-    margin:
-        35px auto 0;
-
-    text-align: center;
-}
-
-.selected-label {
-    color: #666;
-
-    min-height: 28px;
-
-    margin-bottom: 12px;
 
     font-size: 18px;
+
+    line-height: 1.5;
+
+    margin-bottom: 28px;
 }
 
-#startButton {
-    width: 100%;
 
-    padding: 18px;
+.activity-button {
+    margin-top: auto;
 
-    border: none;
+    padding:
+        14px 18px;
 
-    border-radius: 15px;
+    border-radius: 14px;
 
     background: #4285f4;
 
     color: white;
 
-    font-size: 24px;
+    font-size: 18px;
 
     font-weight: bold;
+}
 
-    cursor: pointer;
+
+/* ACTIVITY COLORS */
+
+.spelling-card {
+    border-top:
+        6px solid #4285f4;
+}
+
+.vocab-card {
+    border-top:
+        6px solid #8e44ad;
+}
+
+.math-card {
+    border-top:
+        6px solid #f39c12;
+}
+
+
+/* COMING SOON */
+
+.coming-soon {
+    opacity: .7;
+
+    cursor: default;
+}
+
+.coming-soon:hover {
+    transform: none;
 
     box-shadow:
-        0 5px 15px
-        rgba(66,133,244,.25);
-
-    transition:
-        transform .15s,
-        opacity .15s,
-        box-shadow .15s;
+        0 8px 25px
+        rgba(0,0,0,.08);
 }
 
-#startButton:hover:not(:disabled) {
-    box-shadow:
-        0 8px 20px
-        rgba(66,133,244,.35);
+
+.coming-soon-badge {
+    position: absolute;
+
+    top: 16px;
+
+    right: 16px;
+
+    padding:
+        6px 10px;
+
+    border-radius: 20px;
+
+    background: #fff4d6;
+
+    color: #8a6200;
+
+    font-size: 13px;
+
+    font-weight: bold;
 }
 
-#startButton:active:not(:disabled) {
-    transform:
-        scale(.97);
-}
 
-#startButton:disabled {
-    opacity: .45;
+.activity-button.disabled {
+    background: #bbb;
 
-    cursor:
-        not-allowed;
-
-    box-shadow: none;
+    color: white;
 }
 
 
@@ -341,6 +275,7 @@ a {
     justify-content: center;
 }
 
+
 .practice-card {
     width: 100%;
 
@@ -365,7 +300,7 @@ a {
 }
 
 
-/* CURRENT PROFILE BAR */
+/* PRACTICE TOP BAR */
 
 .profile-bar {
     display: flex;
@@ -380,6 +315,7 @@ a {
     margin-bottom: 15px;
 }
 
+
 .profile-info {
     display: flex;
 
@@ -390,18 +326,22 @@ a {
     text-align: left;
 }
 
+
 #profileImage {
     width: 72px;
+
     height: 72px;
 
     object-fit: contain;
 }
+
 
 #profileName {
     font-size: 22px;
 
     font-weight: bold;
 }
+
 
 .profile-subtitle {
     color: #777;
@@ -412,8 +352,6 @@ a {
 }
 
 
-/* PRACTICE TOP BUTTONS */
-
 .profile-actions {
     display: flex;
 
@@ -422,12 +360,48 @@ a {
     align-items: center;
 }
 
+
 .profile-actions
 .history-button {
     width: auto;
 
     padding:
         10px 16px;
+}
+
+
+/* GENERIC TOP BUTTON */
+
+.history-button {
+    display: inline-block;
+
+    text-decoration: none;
+
+    background: #f0f3f8;
+
+    color: #333;
+
+    border-radius: 12px;
+
+    padding:
+        11px 12px;
+
+    font-weight: bold;
+
+    transition:
+        background .15s,
+        transform .15s;
+}
+
+
+.history-button:hover {
+    background: #e2e7ef;
+}
+
+
+.history-button:active {
+    transform:
+        scale(.97);
 }
 
 
@@ -481,11 +455,13 @@ a {
         box-shadow .15s;
 }
 
+
 #speakButton:hover {
     box-shadow:
         0 7px 16px
         rgba(66,133,244,.32);
 }
+
 
 #speakButton:active {
     transform:
@@ -493,7 +469,7 @@ a {
 }
 
 
-/* WORD */
+/* WORD DISPLAY */
 
 #wordDisplay {
     font-size: 46px;
@@ -536,6 +512,7 @@ a {
         box-shadow .15s;
 }
 
+
 #letterInput:focus {
     border-color: #4285f4;
 
@@ -557,6 +534,7 @@ a {
     margin-top: 18px;
 }
 
+
 #progress {
     color: #777;
 
@@ -572,6 +550,7 @@ a {
     margin-top: 30px;
 }
 
+
 .bottom-links a {
     color: #4285f4;
 
@@ -580,13 +559,15 @@ a {
     text-decoration: none;
 }
 
+
 .bottom-links a:hover {
-    text-decoration:
-        underline;
+    text-decoration: underline;
 }
 
 
-/* SESSION SIDEBAR */
+/* =====================================================
+   SESSION SIDEBAR
+   ===================================================== */
 
 .results-panel {
     width: 290px;
@@ -601,11 +582,13 @@ a {
     overflow-y: auto;
 }
 
+
 .results-panel h2 {
     margin-top: 0;
 
     text-align: center;
 }
+
 
 .sidebar-subtitle {
     text-align: center;
@@ -619,6 +602,7 @@ a {
     margin-bottom: 18px;
 }
 
+
 #resultsList {
     list-style: none;
 
@@ -626,6 +610,7 @@ a {
 
     margin: 0;
 }
+
 
 #resultsList li {
     padding:
@@ -637,9 +622,11 @@ a {
     font-size: 18px;
 }
 
+
 .correct {
     color: #188038;
 }
+
 
 .missed {
     color: #d93025;
@@ -651,12 +638,13 @@ a {
    ===================================================== */
 
 
-/* WRONG LETTER */
+/* WRONG LETTER SHAKE */
 
 .shake {
     animation:
         shake .35s;
 }
+
 
 @keyframes shake {
 
@@ -692,12 +680,13 @@ a {
 }
 
 
-/* PERFECT WORD */
+/* SUCCESS POP */
 
 .success {
     animation:
         successPop .55s;
 }
+
 
 @keyframes successPop {
 
@@ -731,6 +720,7 @@ a {
         fly 1.2s forwards;
 }
 
+
 @keyframes fly {
 
     0% {
@@ -750,7 +740,6 @@ a {
 
         opacity: 0;
     }
-
 }
 
 
@@ -767,6 +756,7 @@ a {
         30px 20px 50px;
 }
 
+
 .topbar {
     display: flex;
 
@@ -779,6 +769,7 @@ a {
 
     margin-bottom: 25px;
 }
+
 
 .back-button {
     text-decoration: none;
@@ -814,6 +805,7 @@ a {
     margin-bottom: 25px;
 }
 
+
 .profile-header img {
     width: 120px;
 
@@ -822,12 +814,14 @@ a {
     object-fit: contain;
 }
 
+
 .profile-header h1 {
     margin:
         0 0 5px;
 
     font-size: 34px;
 }
+
 
 .profile-header p {
     margin: 0;
@@ -851,6 +845,7 @@ a {
     margin-bottom: 25px;
 }
 
+
 .summary-card {
     background: white;
 
@@ -865,6 +860,7 @@ a {
         rgba(0,0,0,.06);
 }
 
+
 .summary-number {
     font-size: 32px;
 
@@ -872,6 +868,7 @@ a {
 
     margin-bottom: 5px;
 }
+
 
 .summary-label {
     color: #777;
@@ -894,6 +891,7 @@ a {
         rgba(0,0,0,.06);
 }
 
+
 .panel h2 {
     margin-top: 0;
 }
@@ -904,9 +902,9 @@ a {
 table {
     width: 100%;
 
-    border-collapse:
-        collapse;
+    border-collapse: collapse;
 }
+
 
 th,
 td {
@@ -919,15 +917,18 @@ td {
         1px solid #eee;
 }
 
+
 th {
     color: #666;
 }
+
 
 .bad {
     color: #d93025;
 
     font-weight: bold;
 }
+
 
 .good {
     color: #188038;
@@ -946,9 +947,11 @@ th {
         1px solid #eee;
 }
 
+
 .session:last-child {
     border-bottom: none;
 }
+
 
 .session-title {
     font-weight: bold;
@@ -956,9 +959,11 @@ th {
     margin-bottom: 5px;
 }
 
+
 .session-details {
     color: #666;
 }
+
 
 .empty {
     color: #777;
@@ -970,30 +975,131 @@ th {
 
 
 /* =====================================================
+   FUTURE VOCAB PAGE
+   ===================================================== */
+
+.vocab-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        320px;
+
+    gap: 24px;
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding:
+        30px 20px;
+}
+
+
+.definition-card {
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+}
+
+
+.definition-label {
+    color: #777;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 14px;
+}
+
+
+.definition-text {
+    font-size: 30px;
+
+    line-height: 1.45;
+
+    font-weight: bold;
+}
+
+
+.word-bank {
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+}
+
+
+.word-bank h2 {
+    margin-top: 0;
+
+    text-align: center;
+}
+
+
+.word-bank-button {
+    width: 100%;
+
+    margin-bottom: 10px;
+
+    padding:
+        12px 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #f3f0fa;
+
+    color: #5e3370;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.word-bank-button:hover {
+    background: #e7def2;
+}
+
+
+/* =====================================================
    MOBILE
    ===================================================== */
 
-@media (max-width: 800px) {
+@media (max-width: 850px) {
 
-    .profiles {
-        grid-template-columns:
-            1fr;
+    .activity-grid {
+        grid-template-columns: 1fr;
 
-        max-width: 480px;
+        max-width: 520px;
 
         margin:
-            0 auto;
+            30px auto 0;
     }
 
-    .profile-image {
-        width: 160px;
-        height: 160px;
+    .activity-card {
+        min-height: 260px;
     }
-
-    .header h1 {
-        font-size: 34px;
-    }
-
 
     .page {
         display: block;
@@ -1028,23 +1134,12 @@ th {
             flex-start;
     }
 
-    #profileImage {
-        width: 58px;
-
-        height: 58px;
-    }
-
-    #profileName {
-        font-size: 19px;
-    }
-
     .profile-actions {
         flex-wrap: wrap;
 
         justify-content:
             flex-end;
     }
-
 
     .summary-grid {
         grid-template-columns:
@@ -1065,6 +1160,9 @@ th {
         font-size: 14px;
     }
 
+    .vocab-layout {
+        grid-template-columns: 1fr;
+    }
 }
 
 
@@ -1078,11 +1176,15 @@ th {
     }
 
     .header h1 {
-        font-size: 30px;
+        font-size: 32px;
     }
 
-    .profile-card {
-        padding: 15px;
+    .activity-icon {
+        font-size: 58px;
+    }
+
+    .activity-title {
+        font-size: 26px;
     }
 
     #wordDisplay {
@@ -1099,4 +1201,7 @@ th {
         font-size: 27px;
     }
 
+    .definition-text {
+        font-size: 24px;
+    }
 }
