@@ -1,8 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -10,44 +10,50 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Wormington Spelling</title>
+    <title>Spelling - Wormington Practice</title>
 
     <link
         rel="stylesheet"
         href="style.css"
     >
+
 </head>
 
 
 <body>
 
+
 <div class="page">
 
+
+    <!-- =========================
+         MAIN SPELLING AREA
+         ========================= -->
+
     <main class="practice-area">
+
 
         <div
             class="practice-card"
             id="practiceCard"
         >
 
+
+            <!-- TOP NAVIGATION -->
+
             <div class="profile-bar">
 
-                <div class="profile-info">
 
-                    <img
-                        id="profileImage"
-                        src=""
-                        alt="Profile"
-                    >
+                <div class="profile-info">
 
                     <div>
 
                         <div id="profileName">
-                            Profile
+                            ✏️ Spelling
                         </div>
 
                         <div class="profile-subtitle">
-                            Current player
+                            Listen to the word and spell it.
                         </div>
 
                     </div>
@@ -61,30 +67,33 @@
                         class="history-button"
                         href="index.html"
                     >
-                        Home
-                    </a>
-
-                    <a
-                        class="history-button"
-                        href="history.html"
-                    >
-                        History
+                        🏠 Home
                     </a>
 
                 </div>
 
+
             </div>
 
 
+
+            <!-- TITLE -->
+
             <h1>
-                Wormington Spelling
+                Spelling Practice
             </h1>
 
+
+
+            <!-- SCORE -->
 
             <div id="score">
                 Perfect: 0 | Missed: 0
             </div>
 
+
+
+            <!-- HEAR WORD -->
 
             <button
                 id="speakButton"
@@ -95,8 +104,15 @@
             </button>
 
 
-            <div id="wordDisplay"></div>
 
+            <!-- SPELLING DISPLAY -->
+
+            <div id="wordDisplay">
+            </div>
+
+
+
+            <!-- LETTER INPUT -->
 
             <input
                 id="letterInput"
@@ -109,43 +125,70 @@
             >
 
 
-            <div id="message"></div>
+
+            <!-- FEEDBACK -->
+
+            <div id="message">
+            </div>
 
 
-            <div id="progress"></div>
 
+            <!-- PROGRESS -->
+
+            <div id="progress">
+            </div>
+
+
+
+            <!-- BOTTOM NAV -->
 
             <div class="bottom-links">
 
                 <a href="index.html">
-                    ← Change Profile
+                    ← Back to Activities
                 </a>
 
             </div>
 
+
         </div>
+
 
     </main>
 
 
+
+    <!-- =========================
+         SESSION RESULTS
+         ========================= -->
+
     <aside class="results-panel">
+
 
         <h2>
             Today's Words
         </h2>
 
+
         <div class="sidebar-subtitle">
             This practice session
         </div>
 
-        <ul id="resultsList"></ul>
+
+        <ul id="resultsList">
+        </ul>
+
 
     </aside>
+
 
 </div>
 
 
-<script src="app.js?v=11"></script>
+
+<script src="spelling.js?v=1"></script>
+
 
 </body>
+
 </html>
