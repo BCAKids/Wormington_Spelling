@@ -8,9 +8,6 @@
 // VOCABULARY WORDS
 // ======================================================
 
-// Pull only items that have definitions
-// from weekly-words.js.
-
 const masterVocabWords =
     weeklyWords.filter(
         item => item.definition
@@ -45,6 +42,7 @@ function shuffleArray(array) {
     }
 
     return array;
+
 }
 
 
@@ -56,14 +54,11 @@ const vocabWords =
     );
 
 
-// Randomize word bank independently.
+// ======================================================
+// SETTINGS
+// ======================================================
 
-const wordBankWords =
-    shuffleArray(
-        masterVocabWords.map(
-            item => item.word
-        )
-    );
+const CHOICES_PER_QUESTION = 4;
 
 
 // ======================================================
@@ -143,6 +138,53 @@ const vocabCard =
 
 
 // ======================================================
+// BUILD CHOICES
+// ======================================================
+
+function getQuestionChoices() {
+
+    const correctWord =
+        vocabWords[
+            currentQuestionIndex
+        ].word;
+
+
+    const wrongWords =
+        masterVocabWords
+            .map(
+                item => item.word
+            )
+            .filter(
+                word =>
+                    word !== correctWord
+            );
+
+
+    shuffleArray(
+        wrongWords
+    );
+
+
+    const choices = [
+
+        correctWord,
+
+        ...wrongWords.slice(
+            0,
+            CHOICES_PER_QUESTION - 1
+        )
+
+    ];
+
+
+    return shuffleArray(
+        choices
+    );
+
+}
+
+
+// ======================================================
 // BUILD WORD BANK
 // ======================================================
 
@@ -151,7 +193,12 @@ function buildWordBank() {
     wordBank.innerHTML =
         "";
 
-    wordBankWords.forEach(
+
+    const choices =
+        getQuestionChoices();
+
+
+    choices.forEach(
         word => {
 
             const button =
@@ -168,6 +215,10 @@ function buildWordBank() {
             button.textContent =
                 word;
 
+            button.dataset.word =
+                word;
+
+
             button.addEventListener(
 
                 "click",
@@ -182,6 +233,7 @@ function buildWordBank() {
                 }
 
             );
+
 
             wordBank.appendChild(
                 button
@@ -204,17 +256,21 @@ function showQuestion() {
             currentQuestionIndex
         ];
 
+
     currentQuestionMissed =
         false;
 
     questionLocked =
         false;
 
+
     definitionText.textContent =
         item.definition;
 
+
     message.textContent =
         "";
+
 
     progress.textContent =
 
@@ -223,7 +279,8 @@ function showQuestion() {
         + " of "
         + vocabWords.length;
 
-    enableWordBank();
+
+    buildWordBank();
 
 }
 
@@ -239,11 +296,14 @@ function checkAnswer(
 
     if (
         questionLocked
+        ||
+        button.disabled
     ) {
 
         return;
 
     }
+
 
     const correctWord =
         vocabWords[
@@ -258,9 +318,14 @@ function checkAnswer(
         questionLocked =
             true;
 
+
         button.classList.add(
             "vocab-correct"
         );
+
+
+        button.textContent =
+            "✅ " + correctWord;
 
 
         if (
@@ -269,10 +334,12 @@ function checkAnswer(
 
             missedWords++;
 
+
             addResult(
                 correctWord,
                 true
             );
+
 
             message.textContent =
                 "You got it! 👍";
@@ -283,15 +350,19 @@ function checkAnswer(
 
             correctWords++;
 
+
             addResult(
                 correctWord,
                 false
             );
 
+
             message.textContent =
                 "🎉 Correct!";
 
+
             playCorrectSound();
+
 
             showCelebration();
 
@@ -299,6 +370,7 @@ function checkAnswer(
 
 
         updateScore();
+
 
         disableWordBank();
 
@@ -315,26 +387,24 @@ function checkAnswer(
         currentQuestionMissed =
             true;
 
+
+        button.disabled =
+            true;
+
+
         button.classList.add(
             "vocab-wrong"
         );
 
+
+        button.textContent =
+            "❌ " + selectedWord;
+
+
         playWrongSound();
 
+
         showWrongAnimation();
-
-
-        setTimeout(
-            () => {
-
-                button.classList.remove(
-                    "vocab-wrong"
-                );
-
-            },
-
-            600
-        );
 
     }
 
@@ -351,6 +421,7 @@ function playCorrectSound() {
 
     correctSound.currentTime =
         0;
+
 
     correctSound
         .play()
@@ -379,6 +450,7 @@ function playWrongSound() {
     wrongSound.currentTime =
         0;
 
+
     wrongSound
         .play()
         .catch(
@@ -396,7 +468,7 @@ function playWrongSound() {
 
 
 // ======================================================
-// WRONG ANSWER
+// WRONG ANSWER ANIMATION
 // ======================================================
 
 function showWrongAnimation() {
@@ -413,7 +485,7 @@ function showWrongAnimation() {
 
         "Nice try! 😎",
 
-        "That word betrayed you. 😆"
+        "Keep going! 💪"
 
     ];
 
@@ -433,7 +505,9 @@ function showWrongAnimation() {
         "shake"
     );
 
+
     void vocabCard.offsetWidth;
+
 
     vocabCard.classList.add(
         "shake"
@@ -467,7 +541,9 @@ function showCelebration() {
         "success"
     );
 
+
     void vocabCard.offsetWidth;
+
 
     vocabCard.classList.add(
         "success"
@@ -513,8 +589,10 @@ function showCelebration() {
                 "div"
             );
 
+
         emoji.className =
             "celebration";
+
 
         emoji.textContent =
 
@@ -526,6 +604,7 @@ function showCelebration() {
                 )
             ];
 
+
         emoji.style.left =
 
             (
@@ -536,8 +615,10 @@ function showCelebration() {
 
             + "%";
 
+
         emoji.style.bottom =
             "50px";
+
 
         vocabCard.appendChild(
             emoji
@@ -560,7 +641,7 @@ function showCelebration() {
 
 
 // ======================================================
-// ENABLE / DISABLE WORD BANK
+// DISABLE WORD BANK
 // ======================================================
 
 function disableWordBank() {
@@ -570,38 +651,12 @@ function disableWordBank() {
             ".word-bank-button"
         );
 
+
     buttons.forEach(
         button => {
 
             button.disabled =
                 true;
-
-        }
-    );
-
-}
-
-
-function enableWordBank() {
-
-    const buttons =
-        document.querySelectorAll(
-            ".word-bank-button"
-        );
-
-    buttons.forEach(
-        button => {
-
-            button.disabled =
-                false;
-
-            button.classList.remove(
-                "vocab-correct"
-            );
-
-            button.classList.remove(
-                "vocab-wrong"
-            );
 
         }
     );
@@ -704,10 +759,13 @@ function nextQuestion() {
 
 function finishPractice() {
 
-    disableWordBank();
+    wordBank.innerHTML =
+        "";
+
 
     definitionText.textContent =
         "🏆 Vocabulary Complete!";
+
 
     message.textContent =
 
@@ -717,107 +775,12 @@ function finishPractice() {
         +
         vocabWords.length;
 
+
     progress.textContent =
         "Great job!";
 
-    showFinalCelebration();
 
-}
-
-
-// ======================================================
-// FINAL CELEBRATION
-// ======================================================
-
-function showFinalCelebration() {
-
-    vocabCard
-        .classList
-        .add(
-            "success"
-        );
-
-
-    const emojis = [
-
-        "🏆",
-        "⭐",
-        "🎉",
-        "🚀",
-        "🔥",
-        "💯"
-
-    ];
-
-
-    for (
-        let i = 0;
-        i < 14;
-        i++
-    ) {
-
-        const emoji =
-            document.createElement(
-                "div"
-            );
-
-        emoji.className =
-            "celebration";
-
-        emoji.textContent =
-
-            emojis[
-                Math.floor(
-                    Math.random()
-                    *
-                    emojis.length
-                )
-            ];
-
-        emoji.style.left =
-
-            (
-                5
-                +
-                Math.random() * 90
-            )
-
-            + "%";
-
-        emoji.style.bottom =
-            "25px";
-
-        vocabCard.appendChild(
-            emoji
-        );
-
-
-        setTimeout(
-            () => {
-
-                emoji.remove();
-
-            },
-
-            1300
-        );
-
-    }
-
-
-    setTimeout(
-        () => {
-
-            vocabCard
-                .classList
-                .remove(
-                    "success"
-                );
-
-        },
-
-        700
-    );
+    showCelebration();
 
 }
 
@@ -825,8 +788,6 @@ function showFinalCelebration() {
 // ======================================================
 // START
 // ======================================================
-
-buildWordBank();
 
 showQuestion();
 
