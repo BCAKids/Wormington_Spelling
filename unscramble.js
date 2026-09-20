@@ -206,6 +206,57 @@ function createScramble(word) {
 
 
 // ======================================================
+// PRELOAD CURRENT WORD AUDIO
+// ======================================================
+
+function loadCurrentWordAudio() {
+
+    const word =
+        unscrambleWords[
+            currentWordIndex
+        ];
+
+
+    const filename =
+
+        word
+            .toLowerCase()
+            .replaceAll(
+                " ",
+                "_"
+            )
+
+        + ".mp3";
+
+
+    if (
+        currentWordAudio
+    ) {
+
+        currentWordAudio.pause();
+
+        currentWordAudio.currentTime =
+            0;
+
+    }
+
+
+    currentWordAudio =
+        new Audio(
+            "sounds/" + filename
+        );
+
+
+    currentWordAudio.preload =
+        "auto";
+
+
+    currentWordAudio.load();
+
+}
+
+
+// ======================================================
 // SHOW WORD
 // ======================================================
 
@@ -251,6 +302,9 @@ function showWord() {
 
 
     updateAnswerDisplay();
+
+
+    loadCurrentWordAudio();
 
 }
 
@@ -468,9 +522,9 @@ function checkProgress() {
             .toLowerCase();
 
 
-    // If the current letters no longer
-    // match the beginning of the correct
-    // word, mark this attempt as missed.
+    // Mark missed if the current
+    // answer no longer matches
+    // the beginning of the word.
 
     if (
         !word.startsWith(
@@ -490,8 +544,8 @@ function checkProgress() {
     }
 
 
-    // Only finish when every tile
-    // has been selected.
+    // If all letters have been selected,
+    // check the final answer.
 
     if (
         typed.length ===
@@ -617,45 +671,30 @@ function resetCurrentWord() {
 
 function speakWord() {
 
-    const word =
-        unscrambleWords[
-            currentWordIndex
-        ];
-
-
-    const filename =
-
-        word
-            .toLowerCase()
-            .replaceAll(
-                " ",
-                "_"
-            )
-
-        + ".mp3";
-
-
     if (
-        currentWordAudio
+        !currentWordAudio
     ) {
 
-        currentWordAudio.pause();
-
-        currentWordAudio.currentTime =
-            0;
+        loadCurrentWordAudio();
 
     }
 
 
-    currentWordAudio =
-        new Audio(
-            "sounds/" + filename
-        );
+    currentWordAudio.pause();
+
+    currentWordAudio.currentTime =
+        0;
 
 
-    currentWordAudio
-        .play()
-        .catch(
+    const playPromise =
+        currentWordAudio.play();
+
+
+    if (
+        playPromise !== undefined
+    ) {
+
+        playPromise.catch(
             error => {
 
                 console.error(
@@ -663,8 +702,14 @@ function speakWord() {
                     error
                 );
 
+
+                message.textContent =
+                    "Tap Hear Word again 🔊";
+
             }
         );
+
+    }
 
 }
 
