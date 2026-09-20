@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Unscramble - Wormington Practice</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <main class="practice-area">
+
+
+        <div
+            class="practice-card"
+            id="unscrambleCard"
+        >
+
+
+            <!-- TOP BAR -->
+
+            <div class="profile-bar">
+
+
+                <div class="profile-info">
+
+                    <div>
+
+                        <div id="profileName">
+                            🔀 Unscramble
+                        </div>
+
+                        <div class="profile-subtitle">
+                            Tap the letters in the correct order.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="profile-actions">
+
+                    <a
+                        class="history-button"
+                        href="index.html"
+                    >
+                        🏠 Home
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+            <h1>
+                Unscramble
+            </h1>
+
+
+            <div id="score">
+                Perfect: 0 | Missed: 0
+            </div>
+
+
+            <button
+                id="hearWordButton"
+                type="button"
+                onclick="speakWord()"
+            >
+                🔊 Hear Word
+            </button>
+
+
+            <div class="unscramble-section">
+
+
+                <div class="unscramble-label">
+                    Scrambled Letters
+                </div>
+
+
+                <div
+                    id="scrambledLetters"
+                    class="letter-tiles"
+                >
+                </div>
+
+
+                <div class="unscramble-label answer-label">
+                    Your Answer
+                </div>
+
+
+                <div
+                    id="answerDisplay"
+                    class="answer-display"
+                >
+                </div>
+
+
+                <div
+                    id="message"
+                >
+                </div>
+
+
+                <div
+                    id="progress"
+                >
+                </div>
+
+
+                <div class="unscramble-controls">
+
+                    <button
+                        type="button"
+                        class="unscramble-control-button"
+                        onclick="removeLastLetter()"
+                    >
+                        ⌫ Backspace
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="unscramble-control-button"
+                        onclick="resetCurrentWord()"
+                    >
+                        ↻ Reset
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="bottom-links">
+
+                <a href="index.html">
+                    ← Back to Activities
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+    <aside class="results-panel">
+
+
+        <h2>
+            Today's Words
+        </h2>
+
+
+        <div class="sidebar-subtitle">
+            This practice session
+        </div>
+
+
+        <ul id="resultsList">
+        </ul>
+
+
+    </aside>
+
+
+</div>
+
+
+<script src="weekly-words.js?v=2"></script>
+<script src="unscramble.js?v=1"></script>
+
+
+</body>
+
+</html>
