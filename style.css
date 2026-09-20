@@ -225,7 +225,6 @@ a {
     position: absolute;
 
     top: 16px;
-
     right: 16px;
 
     padding:
@@ -694,7 +693,7 @@ a {
 
 
 /* =====================================================
-   VOCAB
+   VOCABULARY
    ===================================================== */
 
 .vocab-layout {
@@ -748,6 +747,9 @@ a {
     font-weight: bold;
 }
 
+
+/* WORD BANK */
+
 .word-bank {
     background: white;
 
@@ -766,49 +768,91 @@ a {
     text-align: center;
 }
 
+#wordBank {
+    display: grid;
+
+    gap: 12px;
+}
+
+
+/* THIS IS THE WORD BANK BUTTON */
+
 .word-bank-button {
     width: 100%;
 
-    margin-bottom: 10px;
+    min-height: 58px;
 
     padding:
-        12px 14px;
+        14px 16px;
 
-    border: none;
+    border:
+        2px solid transparent;
 
-    border-radius: 12px;
+    border-radius: 14px;
 
     background: #f3f0fa;
 
     color: #5e3370;
 
-    font-size: 17px;
+    font-size: 19px;
 
     font-weight: bold;
 
     cursor: pointer;
+
+    transition:
+        transform .12s,
+        background .12s,
+        border-color .12s;
 }
 
 .word-bank-button:hover {
     background: #e7def2;
 }
 
-.vocab-correct {
-    background: #dff5e6 !important;
-
-    color: #188038 !important;
+.word-bank-button:active {
+    transform:
+        scale(.98);
 }
+
+
+/* CORRECT VOCAB CHOICE */
+
+.vocab-correct {
+    background:
+        #dff5e6 !important;
+
+    color:
+        #188038 !important;
+
+    border-color:
+        #188038 !important;
+}
+
+
+/* WRONG VOCAB CHOICE */
 
 .vocab-wrong {
-    background: #ffe3e0 !important;
+    background:
+        #ffe3e0 !important;
 
-    color: #d93025 !important;
+    color:
+        #d93025 !important;
+
+    border-color:
+        #d93025 !important;
 }
+
+
+/* KEEP WRONG/CORRECT FULLY VISIBLE */
 
 .word-bank-button:disabled {
     cursor: default;
+}
 
-    opacity: .8;
+.vocab-wrong:disabled,
+.vocab-correct:disabled {
+    opacity: 1;
 }
 
 
@@ -1047,8 +1091,43 @@ a {
             flex-end;
     }
 
+
+    /* VOCAB MOBILE */
+
     .vocab-layout {
         grid-template-columns: 1fr;
+
+        gap: 16px;
+
+        padding:
+            15px 0;
+    }
+
+    .definition-card {
+        padding:
+            24px 18px;
+    }
+
+    .definition-text {
+        font-size: 25px;
+    }
+
+    .word-bank {
+        padding:
+            18px;
+    }
+
+    .word-bank h2 {
+        margin-bottom: 14px;
+    }
+
+    .word-bank-button {
+        min-height: 62px;
+
+        font-size: 20px;
+
+        padding:
+            15px 14px;
     }
 
 }
@@ -1174,6 +1253,12 @@ a {
         font-size: 24px;
     }
 
+    .word-bank-button {
+        min-height: 64px;
+
+        font-size: 20px;
+    }
+
     .letter-tiles {
         gap: 9px;
     }
@@ -1199,10 +1284,6 @@ a {
         height: 53px;
 
         font-size: 26px;
-    }
-
-    .unscramble-controls {
-        flex-direction: row;
     }
 
 }
