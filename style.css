@@ -100,7 +100,6 @@ a {
     margin-top: 30px;
 }
 
-
 .activity-card {
     position: relative;
 
@@ -132,7 +131,6 @@ a {
         box-shadow .18s;
 }
 
-
 .activity-card:hover {
     transform:
         translateY(-6px);
@@ -142,13 +140,11 @@ a {
         rgba(0,0,0,.13);
 }
 
-
 .activity-icon {
     font-size: 70px;
 
     margin-bottom: 20px;
 }
-
 
 .activity-title {
     font-size: 30px;
@@ -157,7 +153,6 @@ a {
 
     margin-bottom: 14px;
 }
-
 
 .activity-description {
     color: #666;
@@ -168,7 +163,6 @@ a {
 
     margin-bottom: 28px;
 }
-
 
 .activity-button {
     margin-top: auto;
@@ -200,6 +194,11 @@ a {
         6px solid #8e44ad;
 }
 
+.unscramble-card {
+    border-top:
+        6px solid #16a085;
+}
+
 .math-card {
     border-top:
         6px solid #f39c12;
@@ -222,7 +221,6 @@ a {
         rgba(0,0,0,.08);
 }
 
-
 .coming-soon-badge {
     position: absolute;
 
@@ -244,7 +242,6 @@ a {
     font-weight: bold;
 }
 
-
 .activity-button.disabled {
     background: #bbb;
 
@@ -262,9 +259,6 @@ a {
     min-height: 100vh;
 }
 
-
-/* MAIN PRACTICE AREA */
-
 .practice-area {
     flex: 1;
 
@@ -274,7 +268,6 @@ a {
 
     justify-content: center;
 }
-
 
 .practice-card {
     width: 100%;
@@ -300,7 +293,7 @@ a {
 }
 
 
-/* PRACTICE TOP BAR */
+/* TOP BAR */
 
 .profile-bar {
     display: flex;
@@ -315,7 +308,6 @@ a {
     margin-bottom: 15px;
 }
 
-
 .profile-info {
     display: flex;
 
@@ -326,22 +318,11 @@ a {
     text-align: left;
 }
 
-
-#profileImage {
-    width: 72px;
-
-    height: 72px;
-
-    object-fit: contain;
-}
-
-
 #profileName {
     font-size: 22px;
 
     font-weight: bold;
 }
-
 
 .profile-subtitle {
     color: #777;
@@ -351,7 +332,6 @@ a {
     margin-top: 2px;
 }
 
-
 .profile-actions {
     display: flex;
 
@@ -360,7 +340,6 @@ a {
     align-items: center;
 }
 
-
 .profile-actions
 .history-button {
     width: auto;
@@ -368,9 +347,6 @@ a {
     padding:
         10px 16px;
 }
-
-
-/* GENERIC TOP BUTTON */
 
 .history-button {
     display: inline-block;
@@ -393,11 +369,9 @@ a {
         transform .15s;
 }
 
-
 .history-button:hover {
     background: #e2e7ef;
 }
-
 
 .history-button:active {
     transform:
@@ -426,7 +400,7 @@ a {
 }
 
 
-/* HEAR WORD BUTTON */
+/* SPELLING HEAR WORD */
 
 #speakButton {
     border: none;
@@ -455,13 +429,11 @@ a {
         box-shadow .15s;
 }
 
-
 #speakButton:hover {
     box-shadow:
         0 7px 16px
         rgba(66,133,244,.32);
 }
-
 
 #speakButton:active {
     transform:
@@ -469,7 +441,7 @@ a {
 }
 
 
-/* WORD DISPLAY */
+/* SPELLING WORD DISPLAY */
 
 #wordDisplay {
     font-size: 46px;
@@ -487,7 +459,7 @@ a {
 }
 
 
-/* LETTER INPUT */
+/* SPELLING INPUT */
 
 #letterInput {
     width: 320px;
@@ -512,7 +484,6 @@ a {
         box-shadow .15s;
 }
 
-
 #letterInput:focus {
     border-color: #4285f4;
 
@@ -534,7 +505,6 @@ a {
     margin-top: 18px;
 }
 
-
 #progress {
     color: #777;
 
@@ -550,7 +520,6 @@ a {
     margin-top: 30px;
 }
 
-
 .bottom-links a {
     color: #4285f4;
 
@@ -558,7 +527,6 @@ a {
 
     text-decoration: none;
 }
-
 
 .bottom-links a:hover {
     text-decoration: underline;
@@ -582,13 +550,11 @@ a {
     overflow-y: auto;
 }
 
-
 .results-panel h2 {
     margin-top: 0;
 
     text-align: center;
 }
-
 
 .sidebar-subtitle {
     text-align: center;
@@ -602,7 +568,6 @@ a {
     margin-bottom: 18px;
 }
 
-
 #resultsList {
     list-style: none;
 
@@ -610,7 +575,6 @@ a {
 
     margin: 0;
 }
-
 
 #resultsList li {
     padding:
@@ -622,11 +586,9 @@ a {
     font-size: 18px;
 }
 
-
 .correct {
     color: #188038;
 }
-
 
 .missed {
     color: #d93025;
@@ -637,14 +599,10 @@ a {
    ANIMATIONS
    ===================================================== */
 
-
-/* WRONG LETTER SHAKE */
-
 .shake {
     animation:
         shake .35s;
 }
-
 
 @keyframes shake {
 
@@ -679,14 +637,10 @@ a {
     }
 }
 
-
-/* SUCCESS POP */
-
 .success {
     animation:
         successPop .55s;
 }
-
 
 @keyframes successPop {
 
@@ -706,9 +660,6 @@ a {
     }
 }
 
-
-/* FLOATING CELEBRATION */
-
 .celebration {
     position: absolute;
 
@@ -719,7 +670,6 @@ a {
     animation:
         fly 1.2s forwards;
 }
-
 
 @keyframes fly {
 
@@ -744,238 +694,7 @@ a {
 
 
 /* =====================================================
-   HISTORY PAGE
-   ===================================================== */
-
-.history-container {
-    max-width: 1000px;
-
-    margin: 0 auto;
-
-    padding:
-        30px 20px 50px;
-}
-
-
-.topbar {
-    display: flex;
-
-    justify-content:
-        space-between;
-
-    align-items: center;
-
-    gap: 20px;
-
-    margin-bottom: 25px;
-}
-
-
-.back-button {
-    text-decoration: none;
-
-    color: #4285f4;
-
-    font-weight: bold;
-
-    font-size: 18px;
-}
-
-
-/* HISTORY PROFILE */
-
-.profile-header {
-    display: flex;
-
-    align-items: center;
-
-    gap: 20px;
-
-    background: white;
-
-    padding:
-        20px 25px;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 8px 25px
-        rgba(0,0,0,.08);
-
-    margin-bottom: 25px;
-}
-
-
-.profile-header img {
-    width: 120px;
-
-    height: 120px;
-
-    object-fit: contain;
-}
-
-
-.profile-header h1 {
-    margin:
-        0 0 5px;
-
-    font-size: 34px;
-}
-
-
-.profile-header p {
-    margin: 0;
-
-    color: #666;
-
-    font-size: 18px;
-}
-
-
-/* HISTORY SUMMARY */
-
-.summary-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, minmax(0, 1fr));
-
-    gap: 15px;
-
-    margin-bottom: 25px;
-}
-
-
-.summary-card {
-    background: white;
-
-    padding: 20px;
-
-    border-radius: 18px;
-
-    text-align: center;
-
-    box-shadow:
-        0 5px 18px
-        rgba(0,0,0,.06);
-}
-
-
-.summary-number {
-    font-size: 32px;
-
-    font-weight: bold;
-
-    margin-bottom: 5px;
-}
-
-
-.summary-label {
-    color: #777;
-}
-
-
-/* HISTORY PANELS */
-
-.panel {
-    background: white;
-
-    border-radius: 20px;
-
-    padding: 25px;
-
-    margin-bottom: 25px;
-
-    box-shadow:
-        0 6px 20px
-        rgba(0,0,0,.06);
-}
-
-
-.panel h2 {
-    margin-top: 0;
-}
-
-
-/* TABLE */
-
-table {
-    width: 100%;
-
-    border-collapse: collapse;
-}
-
-
-th,
-td {
-    text-align: left;
-
-    padding:
-        12px 10px;
-
-    border-bottom:
-        1px solid #eee;
-}
-
-
-th {
-    color: #666;
-}
-
-
-.bad {
-    color: #d93025;
-
-    font-weight: bold;
-}
-
-
-.good {
-    color: #188038;
-
-    font-weight: bold;
-}
-
-
-/* SESSION HISTORY */
-
-.session {
-    padding:
-        15px 0;
-
-    border-bottom:
-        1px solid #eee;
-}
-
-
-.session:last-child {
-    border-bottom: none;
-}
-
-
-.session-title {
-    font-weight: bold;
-
-    margin-bottom: 5px;
-}
-
-
-.session-details {
-    color: #666;
-}
-
-
-.empty {
-    color: #777;
-
-    text-align: center;
-
-    padding: 25px;
-}
-
-
-/* =====================================================
-   FUTURE VOCAB PAGE
+   VOCAB
    ===================================================== */
 
 .vocab-layout {
@@ -995,7 +714,6 @@ th {
         30px 20px;
 }
 
-
 .definition-card {
     background: white;
 
@@ -1007,7 +725,6 @@ th {
         0 8px 25px
         rgba(0,0,0,.08);
 }
-
 
 .definition-label {
     color: #777;
@@ -1023,7 +740,6 @@ th {
     margin-bottom: 14px;
 }
 
-
 .definition-text {
     font-size: 30px;
 
@@ -1031,7 +747,6 @@ th {
 
     font-weight: bold;
 }
-
 
 .word-bank {
     background: white;
@@ -1045,13 +760,11 @@ th {
         rgba(0,0,0,.08);
 }
 
-
 .word-bank h2 {
     margin-top: 0;
 
     text-align: center;
 }
-
 
 .word-bank-button {
     width: 100%;
@@ -1076,9 +789,202 @@ th {
     cursor: pointer;
 }
 
-
 .word-bank-button:hover {
     background: #e7def2;
+}
+
+.vocab-correct {
+    background: #dff5e6 !important;
+
+    color: #188038 !important;
+}
+
+.vocab-wrong {
+    background: #ffe3e0 !important;
+
+    color: #d93025 !important;
+}
+
+.word-bank-button:disabled {
+    cursor: default;
+
+    opacity: .8;
+}
+
+
+/* =====================================================
+   UNSCRAMBLE
+   ===================================================== */
+
+.unscramble-section {
+    margin-top: 30px;
+}
+
+.unscramble-label {
+    margin-bottom: 12px;
+
+    color: #777;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.answer-label {
+    margin-top: 32px;
+}
+
+.letter-tiles {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    min-height: 74px;
+
+    padding:
+        8px 0;
+}
+
+.letter-tile {
+    min-width: 64px;
+
+    height: 66px;
+
+    padding:
+        0 14px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #eef3ff;
+
+    color: #274690;
+
+    font-size: 32px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 10px
+        rgba(0,0,0,.14);
+
+    transition:
+        transform .12s,
+        opacity .12s,
+        background .12s;
+}
+
+.letter-tile:active {
+    transform:
+        scale(.93);
+}
+
+.letter-tile-used {
+    opacity: .22;
+
+    box-shadow: none;
+}
+
+.answer-display {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    min-height: 66px;
+
+    padding:
+        6px 0;
+}
+
+.answer-slot {
+    width: 50px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-bottom:
+        4px solid #4285f4;
+
+    font-size: 30px;
+
+    font-weight: bold;
+}
+
+.unscramble-controls {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    margin-top: 25px;
+}
+
+.unscramble-control-button {
+    border: none;
+
+    border-radius: 12px;
+
+    padding:
+        12px 18px;
+
+    background: #f0f3f8;
+
+    color: #333;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+#hearWordButton {
+    border: none;
+
+    background: #4285f4;
+
+    color: white;
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    padding:
+        15px 28px;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px
+        rgba(66,133,244,.25);
+}
+
+#hearWordButton:active {
+    transform:
+        scale(.97);
 }
 
 
@@ -1141,32 +1047,99 @@ th {
             flex-end;
     }
 
-    .summary-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-    }
-
-    .profile-header {
-        display: block;
-
-        text-align: center;
-    }
-
-    .profile-header img {
-        margin-bottom: 10px;
-    }
-
-    table {
-        font-size: 14px;
-    }
-
     .vocab-layout {
         grid-template-columns: 1fr;
     }
+
 }
 
 
-/* EXTRA SMALL PHONE */
+/* =====================================================
+   UNSCRAMBLE MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .unscramble-section {
+        margin-top: 22px;
+    }
+
+    .letter-tiles {
+        gap: 10px;
+
+        padding:
+            8px 0 12px;
+    }
+
+    .letter-tile {
+        min-width: 58px;
+
+        height: 62px;
+
+        padding:
+            0 12px;
+
+        border-radius: 14px;
+
+        font-size: 30px;
+
+        font-weight: 800;
+    }
+
+    .answer-display {
+        gap: 8px;
+
+        padding:
+            8px 0;
+    }
+
+    .answer-slot {
+        width: 44px;
+
+        height: 55px;
+
+        font-size: 27px;
+
+        border-bottom:
+            4px solid #4285f4;
+    }
+
+    .unscramble-label {
+        font-size: 15px;
+    }
+
+    #hearWordButton {
+        width: 100%;
+
+        max-width: 320px;
+
+        padding:
+            16px 20px;
+
+        font-size: 21px;
+    }
+
+    .unscramble-controls {
+        flex-direction: row;
+
+        gap: 10px;
+    }
+
+    .unscramble-control-button {
+        flex: 1;
+
+        padding:
+            14px 10px;
+
+        font-size: 16px;
+    }
+
+}
+
+
+/* =====================================================
+   EXTRA SMALL PHONE
+   ===================================================== */
 
 @media (max-width: 450px) {
 
@@ -1197,15 +1170,39 @@ th {
         font-size: 25px;
     }
 
-    .summary-number {
-        font-size: 27px;
-    }
-
     .definition-text {
         font-size: 24px;
     }
-}
-.unscramble-card {
-    border-top:
-        6px solid #16a085;
+
+    .letter-tiles {
+        gap: 9px;
+    }
+
+    .letter-tile {
+        min-width: 56px;
+
+        height: 60px;
+
+        padding:
+            0 10px;
+
+        font-size: 29px;
+    }
+
+    .answer-display {
+        gap: 7px;
+    }
+
+    .answer-slot {
+        width: 41px;
+
+        height: 53px;
+
+        font-size: 26px;
+    }
+
+    .unscramble-controls {
+        flex-direction: row;
+    }
+
 }
