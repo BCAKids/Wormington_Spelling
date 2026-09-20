@@ -1,39 +1,39 @@
 const weeklyWordData = `
-confer
+transfer	to move up or carry from one place or person to another
+suffer
+infer
 reference
-influx
-provoked
-commit
-submit
-monolith
-monotony
-biceps
-bilingual
-begrudge
-deposited
-imagined
-Canadian
-technician
-insistence
-inequality
-infirmity
-exercising
-picnicking
-referendum	a vote in favor of or against a particular issue
+conifer	a cone-bearing tree
 defer	to submit to another's wishes
+referee
+Lucifer
+fertile	bearing fruit in great quantities
+monotone
 monogram	a single design made up of a person's initials
-monotheism	the belief that there is one God
-celebrated	observed as a special occasion with ceremonies or festivities
-fluctuate	to change continually; to waver
-revoked	repealed; canceled
-biennial	occurring every two years or lasting for two years (as plants)
-humanitarian	one who works to improve the lives and well-being of others
-indulgence	the act of being permissive; leniency
-bedraggled	wet and dirty
-absurdity	that which is ridiculous or silly
-conformity	the state of being in agreement; likeness
-purity	the state of being physically and morally clean
-emerging	newly formed or becoming prominent
+monotony
+monologue
+monopoly
+monarchy	a nation governed by a king or queen
+visible	able to be seen
+accessible
+audible	able to be heard
+corruptible
+responsible
+digestible
+sensible
+possible
+convertible	able to be changed into something else
+credible	can be believed
+terrible
+edible	can be eaten
+considerable
+durable	lasting; not easily broken
+capable	having ability; skillful
+manageable
+portable	able to be moved from place to place
+remarkable
+reliable	trustworthy; able to be counted on
+noticeable
 `;
 
 
