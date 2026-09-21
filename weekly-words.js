@@ -1,39 +1,39 @@
 const weeklyWordData = `
-transfer	to move up or carry from one place or person to another
-suffer
-infer
-reference
-conifer	a cone-bearing tree
-defer	to submit to another's wishes
-referee
-Lucifer
-fertile	bearing fruit in great quantities
-monotone
-monogram	a single design made up of a person's initials
-monotony
-monologue
-monopoly
-monarchy	a nation governed by a king or queen
-visible	able to be seen
-accessible
-audible	able to be heard
-corruptible
-responsible
-digestible
-sensible
-possible
-convertible	able to be changed into something else
-credible	can be believed
-terrible
-edible	can be eaten
-considerable
-durable	lasting; not easily broken
-capable	having ability; skillful
-manageable
-portable	able to be moved from place to place
-remarkable
-reliable	trustworthy; able to be counted on
-noticeable
+abruptly
+bankruptcy
+corruption
+disrupt
+interruption
+rupture
+analogy
+analysis
+adjust
+adoption
+advance
+advertise
+contradictory
+introductory
+inventory
+mandatory
+satisfactory
+sensory
+dormitory
+factory
+eruption	a sudden explosion
+anagram	a word made by rearranging the letters of another word or phrase
+anatomy	the study of the structure of humans, animals, and plants
+adverb	a word that modifies a verb, adjective, or other adverb
+accusatory	suggesting guilt or assigning blame
+armory	a storehouse of weaponry, especially for police or military
+circulatory	relating to the movement of blood through the body
+cursory	quick and careless
+depository	a place where items are stored for safekeeping
+directory	a list of names and addresses
+observatory	a building for observing planets and stars
+oratory	the art and skill of effective public speaking
+migratory	traveling from one region to another at different seasons
+olfactory	relating to the sense of smell
+respiratory	the system of the body related to breathing
 `;
 
 
