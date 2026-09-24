@@ -8,7 +8,12 @@
 // SPELLING WORDS
 // ======================================================
 
-// Pull all spelling words from weekly-words.js
+// spelling-lists.js provides:
+//
+// selectedList
+// weeklyWords
+//
+// We use all words from the selected list.
 
 const masterSpellingWords =
     weeklyWords.map(
@@ -33,6 +38,7 @@ function shuffleArray(array) {
                 Math.random() * (i + 1)
             );
 
+
         [
             array[i],
             array[j]
@@ -43,11 +49,14 @@ function shuffleArray(array) {
 
     }
 
+
     return array;
+
 }
 
 
-// Randomize spelling order every time the page loads.
+// Randomize the spelling list each time
+// the page loads.
 
 const spellingWords =
     shuffleArray(
@@ -76,18 +85,22 @@ let missedWords = 0;
 
 let currentWordAudio = null;
 
+
 const correctSound =
     new Audio(
         "sounds/correct.mp3"
     );
+
 
 const wrongSound =
     new Audio(
         "sounds/wrong.mp3"
     );
 
+
 correctSound.preload =
     "auto";
+
 
 wrongSound.preload =
     "auto";
@@ -102,35 +115,42 @@ const wordDisplay =
         "wordDisplay"
     );
 
+
 const message =
     document.getElementById(
         "message"
     );
+
 
 const progress =
     document.getElementById(
         "progress"
     );
 
+
 const letterInput =
     document.getElementById(
         "letterInput"
     );
+
 
 const resultsList =
     document.getElementById(
         "resultsList"
     );
 
+
 const score =
     document.getElementById(
         "score"
     );
 
+
 const practiceCard =
     document.getElementById(
         "practiceCard"
     );
+
 
 const speakButton =
     document.getElementById(
@@ -138,8 +158,28 @@ const speakButton =
     );
 
 
+const selectedListName =
+    document.getElementById(
+        "selectedListName"
+    );
+
+
 // ======================================================
-// DISPLAY WORD
+// SHOW SELECTED LIST NAME
+// ======================================================
+
+if (
+    selectedListName
+) {
+
+    selectedListName.textContent =
+        selectedList.name;
+
+}
+
+
+// ======================================================
+// DISPLAY CURRENT WORD
 // ======================================================
 
 function showWord() {
@@ -149,7 +189,9 @@ function showWord() {
             currentWordIndex
         ];
 
+
     let display = "";
+
 
     for (
         let i = 0;
@@ -157,14 +199,21 @@ function showWord() {
         i++
     ) {
 
+        // Automatically show spaces.
+
         if (
             word[i] === " "
         ) {
 
             display += "   ";
+
             continue;
 
         }
+
+
+        // Show letters already entered
+        // correctly.
 
         if (
             i < currentLetterIndex
@@ -184,10 +233,13 @@ function showWord() {
 
     }
 
+
     wordDisplay.textContent =
         display;
 
+
     progress.textContent =
+
         "Word "
         + (currentWordIndex + 1)
         + " of "
@@ -197,7 +249,27 @@ function showWord() {
 
 
 // ======================================================
-// PLAY SPELLING WORD
+// GET AUDIO FILENAME
+// ======================================================
+
+function getAudioFilename(word) {
+
+    return (
+        word
+            .toLowerCase()
+            .replaceAll(
+                " ",
+                "_"
+            )
+        +
+        ".mp3"
+    );
+
+}
+
+
+// ======================================================
+// PLAY CURRENT WORD
 // ======================================================
 
 function speakWord() {
@@ -207,16 +279,11 @@ function speakWord() {
             currentWordIndex
         ];
 
+
     const filename =
-
-        word
-            .toLowerCase()
-            .replaceAll(
-                " ",
-                "_"
-            )
-
-        + ".mp3";
+        getAudioFilename(
+            word
+        );
 
 
     if (
@@ -237,6 +304,10 @@ function speakWord() {
         );
 
 
+    currentWordAudio.preload =
+        "auto";
+
+
     currentWordAudio
         .play()
         .catch(
@@ -247,17 +318,27 @@ function speakWord() {
                     error
                 );
 
+
+                message.textContent =
+                    "Could not play word audio 🔊";
+
             }
         );
 
 
-    letterInput.focus();
+    if (
+        letterInput
+    ) {
+
+        letterInput.focus();
+
+    }
 
 }
 
 
 // ======================================================
-// CHECK LETTER
+// CHECK TYPED LETTER
 // ======================================================
 
 function handleLetter(letter) {
@@ -268,7 +349,7 @@ function handleLetter(letter) {
         ];
 
 
-    // Ignore non-letter characters.
+    // Only accept letters.
 
     if (
         !/^[a-zA-Z]$/.test(letter)
@@ -290,6 +371,8 @@ function handleLetter(letter) {
 
     }
 
+
+    // Safety check.
 
     if (
         currentLetterIndex
@@ -317,6 +400,9 @@ function handleLetter(letter) {
 
         currentLetterIndex++;
 
+
+        // Skip spaces after
+        // correct letters.
 
         while (
             word[currentLetterIndex]
@@ -351,6 +437,7 @@ function handleLetter(letter) {
 
         currentWordMissed =
             true;
+
 
         showWrongAnimation();
 
@@ -448,7 +535,7 @@ function showWrongAnimation() {
 
 
 // ======================================================
-// FINISH WORD
+// FINISH CURRENT WORD
 // ======================================================
 
 function finishWord() {
@@ -475,7 +562,9 @@ function finishWord() {
 
         missedWords++;
 
+
         updateScore();
+
 
         message.textContent =
             "You got it! 👍";
@@ -486,9 +575,12 @@ function finishWord() {
 
         correctWords++;
 
+
         updateScore();
 
+
         playCorrectSound();
+
 
         showCelebration();
 
@@ -671,7 +763,7 @@ function showCelebration() {
 
 
 // ======================================================
-// SESSION RESULT SIDEBAR
+// ADD RESULT TO SIDEBAR
 // ======================================================
 
 function addResult(
@@ -692,6 +784,7 @@ function addResult(
         item.textContent =
             "❌ " + word;
 
+
         item.className =
             "missed";
 
@@ -701,6 +794,7 @@ function addResult(
 
         item.textContent =
             "✅ " + word;
+
 
         item.className =
             "correct";
@@ -716,7 +810,7 @@ function addResult(
 
 
 // ======================================================
-// SCORE
+// UPDATE SCORE
 // ======================================================
 
 function updateScore() {
@@ -740,8 +834,10 @@ function nextWord() {
 
     currentWordIndex++;
 
+
     currentLetterIndex =
         0;
+
 
     currentWordMissed =
         false;
@@ -763,8 +859,10 @@ function nextWord() {
     letterInput.disabled =
         false;
 
+
     letterInput.value =
         "";
+
 
     message.textContent =
         "";
@@ -773,8 +871,8 @@ function nextWord() {
     showWord();
 
 
-    // Automatically announce
-    // every word after the first.
+    // Automatically announce every
+    // word after the first one.
 
     speakWord();
 
@@ -835,11 +933,9 @@ function finishPractice() {
 
 function showFinalCelebration() {
 
-    practiceCard
-        .classList
-        .add(
-            "success"
-        );
+    practiceCard.classList.add(
+        "success"
+    );
 
 
     const emojis = [
