@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Choose a List - Wormington Practice</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body class="home-page">
+
+
+<div class="container">
+
+
+    <div class="header">
+
+        <h1 id="pageTitle">
+            Choose a List
+        </h1>
+
+        <p id="pageSubtitle">
+            Select the spelling list you want to practice.
+        </p>
+
+    </div>
+
+
+    <div
+        class="list-selection-grid"
+        id="listSelectionGrid"
+    >
+    </div>
+
+
+    <div class="list-select-footer">
+
+        <a
+            class="history-button"
+            href="index.html"
+        >
+            ← Back to Activities
+        </a>
+
+    </div>
+
+
+</div>
+
+
+<script src="spelling-lists.js?v=1"></script>
+
+
+<script>
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const mode =
+    params.get("mode")
+    || "spelling";
+
+
+const pageTitle =
+    document.getElementById(
+        "pageTitle"
+    );
+
+
+const pageSubtitle =
+    document.getElementById(
+        "pageSubtitle"
+    );
+
+
+const listSelectionGrid =
+    document.getElementById(
+        "listSelectionGrid"
+    );
+
+
+// ======================================================
+// MODE SETTINGS
+// ======================================================
+
+const modeSettings = {
+
+    spelling: {
+
+        title:
+            "Choose a Spelling List",
+
+        subtitle:
+            "Select the list you want to practice.",
+
+        destination:
+            "spelling.html"
+
+    },
+
+    vocab: {
+
+        title:
+            "Choose a Vocabulary List",
+
+        subtitle:
+            "Select the vocabulary list you want to practice.",
+
+        destination:
+            "vocab.html"
+
+    },
+
+    unscramble: {
+
+        title:
+            "Choose an Unscramble List",
+
+        subtitle:
+            "Select the spelling list you want to unscramble.",
+
+        destination:
+            "unscramble.html"
+
+    }
+
+};
+
+
+const settings =
+    modeSettings[mode]
+    || modeSettings.spelling;
+
+
+pageTitle.textContent =
+    settings.title;
+
+
+pageSubtitle.textContent =
+    settings.subtitle;
+
+
+// ======================================================
+// BUILD LIST CARDS
+// ======================================================
+
+const availableLists =
+    getAvailableSpellingLists();
+
+
+availableLists.forEach(
+    list => {
+
+        const card =
+            document.createElement(
+                "button"
+            );
+
+
+        card.type =
+            "button";
+
+
+        card.className =
+            "list-select-card";
+
+
+        const isCurrent =
+            list.key === CURRENT_LIST;
+
+
+        const noVocab =
+            mode === "vocab"
+            &&
+            list.vocabCount === 0;
+
+
+        if (isCurrent) {
+
+            card.classList.add(
+                "current-list"
+            );
+
+        }
+
+
+        if (noVocab) {
+
+            card.classList.add(
+                "list-disabled"
+            );
+
+            card.disabled =
+                true;
+
+        }
+
+
+        let badge = "";
+
+
+        if (isCurrent) {
+
+            badge = `
+                <div class="current-list-badge">
+                    Current
+                </div>
+            `;
+
+        }
+
+
+        let typeLabel = "";
+
+
+        if (
+            list.type === "challenge"
+        ) {
+
+            typeLabel =
+                "Challenge List";
+
+        }
+
+        else if (
+            list.type === "review"
+        ) {
+
+            typeLabel =
+                "Review List";
+
+        }
+
+        else {
+
+            typeLabel =
+                "Spelling List";
+
+        }
+
+
+        let vocabText =
+            list.vocabCount
+            + " vocabulary words";
+
+
+        if (
+            list.vocabCount === 0
+        ) {
+
+            vocabText =
+                "No vocabulary definitions";
+
+        }
+
+
+        card.innerHTML = `
+
+            ${badge}
+
+            <div class="list-select-number">
+                ${list.name}
+            </div>
+
+            <div class="list-select-type">
+                ${typeLabel}
+            </div>
+
+            <div class="list-select-counts">
+
+                <div>
+                    ${list.wordCount} spelling words
+                </div>
+
+                <div>
+                    ${vocabText}
+                </div>
+
+            </div>
+
+        `;
+
+
+        if (!noVocab) {
+
+            card.addEventListener(
+                "click",
+
+                function () {
+
+                    chooseList(
+                        list.key
+                    );
+
+                }
+            );
+
+        }
+
+
+        listSelectionGrid
+            .appendChild(
+                card
+            );
+
+    }
+);
+
+
+// ======================================================
+// CHOOSE LIST
+// ======================================================
+
+function chooseList(
+    listKey
+) {
+
+    localStorage.setItem(
+        "selectedSpellingList",
+        listKey
+    );
+
+
+    window.location.href =
+        settings.destination;
+
+}
+
+</script>
+
+
+</body>
+
+</html>
