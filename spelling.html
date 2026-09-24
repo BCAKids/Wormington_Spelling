@@ -39,7 +39,9 @@
         >
 
 
-            <!-- TOP NAVIGATION -->
+            <!-- =========================
+                 TOP BAR
+                 ========================= -->
 
             <div class="profile-bar">
 
@@ -49,17 +51,14 @@
                     <div>
 
                         <div id="profileName">
-    ✏️ Spelling
-</div>
+                            ✏️ Spelling
+                        </div>
 
-<div
-    class="profile-subtitle"
-    id="selectedListName"
->
-</div>
-
-                        <div class="profile-subtitle">
-                            Listen to the word and spell it.
+                        <div
+                            class="profile-subtitle"
+                            id="selectedListName"
+                        >
+                            Loading list...
                         </div>
 
                     </div>
@@ -68,6 +67,13 @@
 
 
                 <div class="profile-actions">
+
+                    <a
+                        class="history-button"
+                        href="list-select.html?mode=spelling"
+                    >
+                        📋 Change List
+                    </a>
 
                     <a
                         class="history-button"
@@ -82,24 +88,27 @@
             </div>
 
 
-
-            <!-- TITLE -->
+            <!-- =========================
+                 TITLE
+                 ========================= -->
 
             <h1>
                 Spelling Practice
             </h1>
 
 
-
-            <!-- SCORE -->
+            <!-- =========================
+                 SCORE
+                 ========================= -->
 
             <div id="score">
                 Perfect: 0 | Missed: 0
             </div>
 
 
-
-            <!-- HEAR WORD -->
+            <!-- =========================
+                 HEAR WORD
+                 ========================= -->
 
             <button
                 id="speakButton"
@@ -110,15 +119,17 @@
             </button>
 
 
-
-            <!-- SPELLING DISPLAY -->
+            <!-- =========================
+                 WORD DISPLAY
+                 ========================= -->
 
             <div id="wordDisplay">
             </div>
 
 
-
-            <!-- LETTER INPUT -->
+            <!-- =========================
+                 LETTER INPUT
+                 ========================= -->
 
             <input
                 id="letterInput"
@@ -131,27 +142,32 @@
             >
 
 
-
-            <!-- FEEDBACK -->
+            <!-- =========================
+                 FEEDBACK
+                 ========================= -->
 
             <div id="message">
             </div>
 
 
-
-            <!-- PROGRESS -->
+            <!-- =========================
+                 PROGRESS
+                 ========================= -->
 
             <div id="progress">
             </div>
 
 
-
-            <!-- BOTTOM NAV -->
+            <!-- =========================
+                 BOTTOM LINKS
+                 ========================= -->
 
             <div class="bottom-links">
 
-                <a href="index.html">
-                    ← Back to Activities
+                <a
+                    href="list-select.html?mode=spelling"
+                >
+                    ← Choose Another List
                 </a>
 
             </div>
@@ -161,7 +177,6 @@
 
 
     </main>
-
 
 
     <!-- =========================
@@ -190,6 +205,12 @@
 
 </div>
 
+
+<!-- IMPORTANT:
+     spelling-lists.js MUST load first.
+     spelling.js uses the selectedList
+     and weeklyWords variables it creates.
+-->
 
 <script src="spelling-lists.js?v=1"></script>
 <script src="spelling.js?v=4"></script>
