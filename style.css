@@ -1287,3 +1287,169 @@ a {
     }
 
 }
+/* =====================================================
+   LIST SELECTION
+   ===================================================== */
+
+.list-selection-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 30px;
+}
+
+
+.list-select-card {
+    position: relative;
+
+    min-height: 185px;
+
+    padding:
+        26px 20px;
+
+    border:
+        3px solid transparent;
+
+    border-radius: 20px;
+
+    background: white;
+
+    color: #222;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 22px
+        rgba(0,0,0,.08);
+
+    transition:
+        transform .15s,
+        box-shadow .15s,
+        border-color .15s;
+}
+
+
+.list-select-card:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 11px 28px
+        rgba(0,0,0,.12);
+}
+
+
+.list-select-number {
+    font-size: 28px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+
+.list-select-type {
+    color: #777;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    margin-bottom: 18px;
+}
+
+
+.list-select-counts {
+    color: #555;
+
+    font-size: 16px;
+
+    line-height: 1.55;
+}
+
+
+.current-list {
+    border-color:
+        #4285f4;
+}
+
+
+.current-list-badge {
+    position: absolute;
+
+    top: 12px;
+
+    right: 12px;
+
+    padding:
+        5px 10px;
+
+    border-radius: 20px;
+
+    background:
+        #e8f0fe;
+
+    color:
+        #1967d2;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+.list-disabled {
+    opacity: .45;
+
+    cursor: not-allowed;
+}
+
+
+.list-disabled:hover {
+    transform: none;
+
+    box-shadow:
+        0 7px 22px
+        rgba(0,0,0,.08);
+}
+
+
+.list-select-footer {
+    margin-top: 28px;
+
+    text-align: center;
+}
+
+
+@media (max-width: 850px) {
+
+    .list-selection-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .list-selection-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .list-select-card {
+        min-height: 150px;
+    }
+
+    .list-select-number {
+        font-size: 26px;
+    }
+
+}
