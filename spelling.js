@@ -352,7 +352,7 @@ function handleLetter(letter) {
     // Only accept letters.
 
     if (
-        !/^[a-zA-Z]$/.test(letter)
+        !/^[a-zA-Z]$\-/.test(letter)
     ) {
 
         return;
